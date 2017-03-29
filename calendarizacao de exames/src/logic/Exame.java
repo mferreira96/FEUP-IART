@@ -11,16 +11,10 @@ public class Exame {
 		this.day = day;
 		this.month = month;
 		this.year = year;
-		this.hour = hour;
 	}
 	
 	public int getDay() {
 		return day;
-	}
-	
-	
-	public int getHour() {
-		return hour;
 	}
 	
 	public int getMonth() {
@@ -30,4 +24,6 @@ public class Exame {
 	public int getYear() {
 		return year;
 	}
+	
+	// cada exame e representado por um array de bits (tamanho 5)
 }

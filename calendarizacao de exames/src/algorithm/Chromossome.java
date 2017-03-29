@@ -27,6 +27,8 @@ public class Chromossome {
 		System.out.println(c1);
 	}
 
+	// mudar para um array de bits
+	
 	public ArrayList<ArrayList<Integer>> crossover(ArrayList<Integer> c1, ArrayList<Integer> c2, int split_index){
 		
 		//considering split_index, the index before the split

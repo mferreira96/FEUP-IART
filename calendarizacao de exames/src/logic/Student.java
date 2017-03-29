@@ -5,33 +5,32 @@ import java.util.ArrayList;
 public class Student {
 
 	private String name;
-	private ArrayList<Subject> subejcts;
+	private ArrayList<Exame> examesEpocaNormal;
+	private ArrayList<Exame> examesEpocaRecurso;
 	
 	public Student(String name){
 		this.name = name;
-		this.subejcts = new ArrayList<Subject>();
+		this.examesEpocaNormal = new ArrayList<Exame>();
+		this.examesEpocaRecurso = new ArrayList<Exame>();
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public ArrayList<Subject> getSubejcts() {
-		return subejcts;
+	public ArrayList<Exame> getExamesEpocaNormal() {
+		return examesEpocaNormal;
 	}
 	
-	public void addSubject(Subject s){
-		this.subejcts.add(s);
+	public ArrayList<Exame> getExamesEpocaRecurso() {
+		return examesEpocaRecurso;
 	}
 	
-	public void removeSubject(Subject s){
-		
-		if(!this.subejcts.contains(s)){
-			System.out.println("The subject does not exist");
-			return;
-		}
-		else{
-			this.subejcts.remove(s);
-		}
+	public void addExameRecurso(Exame e){
+		examesEpocaNormal.add(e);
+	}
+	
+	public void addExameNormal(Exame e){
+		examesEpocaRecurso.add(e);
 	}
 }

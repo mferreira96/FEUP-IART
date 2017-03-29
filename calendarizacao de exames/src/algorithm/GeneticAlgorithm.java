@@ -2,7 +2,6 @@ package algorithm;
 
 public class GeneticAlgorithm {
 
-
 	private int fitnessFunction(){
 		
 		return 0;
