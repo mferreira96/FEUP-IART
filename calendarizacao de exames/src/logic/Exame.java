@@ -9,11 +9,13 @@ public class Exame {
 	
 	private String name;
 	private int id;
+	private int year;
 	private ArrayList<Student> students;
 	
-	public Exame(int id ,String name){
+	public Exame(int id ,String name, int year){
 		this.name = name;
 		this.id = id;
+		this.year = year;
 		this.students = new ArrayList<Student>();
 	}
 		
@@ -24,6 +26,10 @@ public class Exame {
 	
 	public int getId() {
 		return id;
+	}
+	
+	public int getYear() {
+		return year;
 	}
 	
 	public  ArrayList<Student> getStudents() {
@@ -47,7 +53,7 @@ public class Exame {
 	
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("Exam -> ").append("Id: ").append(getId()).append(" Name: ").append(getName()).append("\n");
+		sb.append("Exam -> ").append("Id: ").append(getId()).append(" Name: ").append(getName()).append(" Year: ").append(getYear()).append("\n");
 		
 		sb.append("Students: ");
 		

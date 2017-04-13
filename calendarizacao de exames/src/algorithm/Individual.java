@@ -42,15 +42,6 @@ public class Individual {
 		return this.chromossome[index];
 	}
 	
-	public void randGenes(){
-		Random rand = new Random();
-		
-		for(int i = 0; i < this.chromossome.length; i++){
-			this.setGene(i, rand.nextInt(2));
-		}
-	}
-
-	
 	public double getFitness(){
 		return fitness;
 	}
