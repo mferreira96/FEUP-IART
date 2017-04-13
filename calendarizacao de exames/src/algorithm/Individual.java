@@ -12,7 +12,23 @@ public class Individual {
 		this.chromossome = new Integer[size];
 		this.fitness = -1;
 	
+		randomInitiator();
 	}
+	
+	
+	public void randomInitiator(){
+	
+		for (int i = 0; i < chromossome.length; i++) {
+			if(Math.random() < 0.5){
+				this.setGene(i, 1);
+			}else{
+				this.setGene(i, 0);
+			}
+			
+		}
+
+	}
+	
 	
 	public Integer[] getChromossome() {
 		return chromossome;

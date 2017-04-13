@@ -9,15 +9,19 @@ public class GeneticAlgorithm {
 	private final int MAX_ITERATIONS;	
 	private double MUTATION_RATE;
 	private double CROSSOVER_RATE;
+	private final int POPULATION_SIZE;
 	private Population population;
+	
 
 
 	
-	public GeneticAlgorithm(int iterations, double mutation_rate, double crossover_rate){
+	public GeneticAlgorithm(int iterations, double mutation_rate, double crossover_rate, int cromossomeLength){
 		this.MAX_ITERATIONS = iterations;
 		this.MUTATION_RATE = mutation_rate;
 		this.CROSSOVER_RATE = crossover_rate;
-		this.population = new Population();
+		this.POPULATION_SIZE = 20;
+		
+		this.population = new Population(this.POPULATION_SIZE,cromossomeLength);
 	}
 	
 	public double getCROSSOVER_RATE() {

@@ -1,36 +1,30 @@
 package logic;
 
-import java.util.ArrayList;
 
 public class Student {
 
 	private String name;
-	private ArrayList<Exame> examesEpocaNormal;
-	private ArrayList<Exame> examesEpocaRecurso;
+	private Integer id;
 	
-	public Student(String name){
+	public Student(String name, Integer id){
 		this.name = name;
-		this.examesEpocaNormal = new ArrayList<Exame>();
-		this.examesEpocaRecurso = new ArrayList<Exame>();
+		this.id = id;
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public ArrayList<Exame> getExamesEpocaNormal() {
-		return examesEpocaNormal;
+	public Integer getId() {
+		return id;
 	}
-	
-	public ArrayList<Exame> getExamesEpocaRecurso() {
-		return examesEpocaRecurso;
-	}
-	
-	public void addExameRecurso(Exame e){
-		examesEpocaNormal.add(e);
-	}
-	
-	public void addExameNormal(Exame e){
-		examesEpocaRecurso.add(e);
+
+	@Override
+	public String toString() {
+		
+		
+		StringBuilder sb = new StringBuilder().append("Student: ").append("Id: ").append(getId()).append(" Name: ").append(getName()).append("\n");
+		
+		return sb.toString();
 	}
 }
