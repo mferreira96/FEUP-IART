@@ -17,15 +17,18 @@ public class GeneticAlgorithm {
 
 
 	
-	public GeneticAlgorithm(int iterations, double mutation_rate, double crossover_rate, int cromossomeLength, Problem problem){
+	public GeneticAlgorithm(int iterations, double mutation_rate, double crossover_rate, Problem problem){
 		this.MAX_ITERATIONS = iterations;
 		this.MUTATION_RATE = mutation_rate;
 		this.CROSSOVER_RATE = crossover_rate;
-		this.POPULATION_SIZE = 20;
+		
 		
 		this.problem = problem;
 		
-		this.population = new Population(this.POPULATION_SIZE,cromossomeLength);
+		this.POPULATION_SIZE = 20;
+		int size = Utils.getNumberOfbitsNedded(this.problem.getNumberOfDays()) * problem.getNumberOfExames();
+		
+		this.population = new Population(this.POPULATION_SIZE,size);
 	}
 	
 	public Problem getProblem(){
@@ -54,24 +57,48 @@ public class GeneticAlgorithm {
 		double fitness = 0;
 		
 		for(int i = 0;  i< population.getIndividuals().size();i++){
-			fitness += calcFitness(population.getIndividuals().get(i));
+			//fitness += calcFitness(population.getIndividuals().get(i));
 		}
 		
 		population.setPopulationFitness(fitness);
 	}
 	
-	public double calcFitness(Individual ind){
+	public void calcFitness(Individual ind){
 		
 		// TODO Fitness function
 		
-		ArrayList<Integer[]> exame_list = Utils.splitChromossome(ind.getChromossome(), problem.getNumberOfExames()); 
+		int fitness = 0;
 		
+		ArrayList<Integer[]> exame_list = Utils.splitChromossome(ind.getChromossome(), this.problem.getNumberOfExames());//problem.getNumberOfExames() 
+		ArrayList<Integer> exame_days = new ArrayList<Integer>();
+	
+		// tranform all Byte infomration into concrete info
 		for(int i = 0; i < exame_list.size(); i++){
-			Utils.byteToInt(exame_list.get(i));
+			exame_days.add(Utils.byteToInt(exame_list.get(i)));
 		}
 		
+		exame_days.sort(null); // order arraylist
+		
+		
+		ArrayList<Integer> difference = new ArrayList<Integer>();
+		
+		for(int i = 0; i < exame_days.size() - 1 ; i++){
+			difference.add(exame_days.get(i + 1) - exame_days.get(i));
+		}
+		
+		
+		// try to arrange something bettes
+		difference.sort(null);
 
-		return 0;
+		fitness += 2 * difference.get(0); 
+		
+		fitness += difference.get(difference.size() - 1);
+		
+		
+		ind.setFitness(fitness);
+	
+
+	
 	}
 	
 	public void mutatePopulation(){
@@ -93,4 +120,5 @@ public class GeneticAlgorithm {
 		
 		return true;
 	}
+	
 }

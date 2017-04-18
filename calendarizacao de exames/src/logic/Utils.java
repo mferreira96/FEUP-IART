@@ -14,7 +14,7 @@ public class Utils {
 			sum += mult * bits[i];
 			mult *= 2;            //1 2 4 8 16 32 64 .... ou seja multiplicar sempre or 2 a começar em 1
 		}
-		
+
 		return sum;	
 	}
 	
@@ -24,6 +24,7 @@ public class Utils {
 		ArrayList<Integer[]> exameDates = new ArrayList<Integer[]>();
 		
 		int size = bits.length/nIterations;
+		
 		
 		for (int i = 0; i < nIterations; i++) {
 		

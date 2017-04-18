@@ -1,6 +1,9 @@
 package algorithm;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 
 public class Population {
@@ -55,7 +58,9 @@ public class Population {
 	
 	public Individual getFittest(){
 		
-		return null;
+		this.getIndividuals().sort(null);
+		
+		return individuals.get(0);
 	}
 
 }

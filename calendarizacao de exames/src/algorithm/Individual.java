@@ -1,8 +1,6 @@
 package algorithm;
 
-import java.util.Random;
-
-public class Individual {
+public class Individual implements Comparable<Individual>{
 	
 	private Integer[] chromossome;
 	private double fitness;
@@ -55,5 +53,19 @@ public class Individual {
 		this.setGene(index , 1 - this.getGene(index));
 		
 	}
+	
+	
+
+	@Override
+	public int compareTo(Individual o) {
+		
+		if(this.getFitness() > o.getFitness()){
+			return -1;
+		}else if(this.getFitness() < o.getFitness()){
+			return 1;
+		}else 
+			return 0;
+	}
+	
 	
 }
