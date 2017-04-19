@@ -68,4 +68,20 @@ public class Individual implements Comparable<Individual>{
 	}
 	
 	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("[");
+		for(int i = 0; i < chromossome.length - 1; i++){
+			sb.append(chromossome[i]);
+			sb.append(",");
+		}
+		sb.append(chromossome[chromossome.length - 1]);
+		sb.append("]");
+		
+		return sb.toString();
+	}
+	
+	
 }

@@ -14,7 +14,7 @@ public class GeneticAlgorithm {
 	private final int POPULATION_SIZE;
 	private Population population;
 	private Problem problem;
-
+	private int chromossomeSize;
 
 	
 	public GeneticAlgorithm(int iterations, double mutation_rate, double crossover_rate, Problem problem){
@@ -26,15 +26,18 @@ public class GeneticAlgorithm {
 		this.problem = problem;
 		
 		this.POPULATION_SIZE = 20;
-		int size = Utils.getNumberOfbitsNedded(this.problem.getNumberOfDays()) * problem.getNumberOfExames();
+		this.chromossomeSize = Utils.getNumberOfbitsNedded(this.problem.getNumberOfDays()) * problem.getNumberOfExames();
 		
-		this.population = new Population(this.POPULATION_SIZE,size);
+		this.population = new Population(this.POPULATION_SIZE,this.chromossomeSize);
 	}
 	
 	public Problem getProblem(){
 		return problem;
 	}
 	
+	public int getChromossomeSize() {
+		return chromossomeSize;
+	}
 	
 	public double getCROSSOVER_RATE() {
 		return CROSSOVER_RATE;
@@ -57,7 +60,7 @@ public class GeneticAlgorithm {
 		double fitness = 0;
 		
 		for(int i = 0;  i< population.getIndividuals().size();i++){
-			//fitness += calcFitness(population.getIndividuals().get(i));
+			fitness += population.getIndividuals().get(i).getFitness();
 		}
 		
 		population.setPopulationFitness(fitness);
@@ -108,9 +111,19 @@ public class GeneticAlgorithm {
 	}
 	
 	
-	public void crossoverPopulation(){
+	public Population crossoverPopulation(Population population){
+	
+		Population nPopulation = new Population(this.POPULATION_SIZE,this.chromossomeSize);
 		
-		// TODO crossover Population
+		for(int i = 0 ; i < this.POPULATION_SIZE; i++){
+			
+			Individual p1 = population.getFittest(i);
+				
+			
+		}
+		
+		
+		return population;	
 	}
 	
 	
@@ -119,6 +132,31 @@ public class GeneticAlgorithm {
 		//TODO condition to terminate
 		
 		return true;
+	}
+	
+	public Individual selectPartent(Population population){
+		
+		
+		// should be already ordered
+		ArrayList<Individual> individuals = population.getIndividuals();
+		
+		individuals.sort(null);
+		
+		double rouletPosition = Math.random() * population.getPopulationFitness();
+		System.out.println("population fitness = " + population.getPopulationFitness());
+		System.out.println("random position = " + rouletPosition);
+		
+		double counter = 0 ;
+		
+		for(int i = 0 ; i < individuals.size(); i++){
+			counter += individuals.get(i).getFitness();
+			System.out.println(counter + " .......  " + individuals.get(i).getFitness() );
+			if(counter >= rouletPosition)
+				return individuals.get(i);
+			
+		}
+		
+		return null;
 	}
 	
 }

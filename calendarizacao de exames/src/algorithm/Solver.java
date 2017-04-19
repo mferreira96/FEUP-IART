@@ -28,16 +28,23 @@ public class Solver {
 			ga.calcFitness(ga.getPopulation().getIndividuals().get(i));
 		}
 		
+		ga.evalPopulation();
+			
+		Individual ind = ga.selectPartent(ga.getPopulation());
+		
+		System.out.println(ind.toString());
+		
+		
 		
 		// debug
 		
-		
+		/*
 		for (int i = 0; i < ga.getPopulation().getIndividuals().size(); i++) {
 			System.out.println(ga.getPopulation().getIndividuals().get(i).getFitness());
 		}
 		
-		System.out.println("Fittest " + ga.getPopulation().getFittest().getFitness());
-		
+		System.out.println("Fittest " + ga.getPopulation().getFittest(0).getFitness());
+	*/	
 	}
 	
 	

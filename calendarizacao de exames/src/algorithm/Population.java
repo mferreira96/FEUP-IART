@@ -56,11 +56,11 @@ public class Population {
 	}
 	
 	
-	public Individual getFittest(){
+	public Individual getFittest(int index){
 		
 		this.getIndividuals().sort(null);
 		
-		return individuals.get(0);
+		return individuals.get(index);
 	}
 
 }
