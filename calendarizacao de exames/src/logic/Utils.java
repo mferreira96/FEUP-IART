@@ -2,6 +2,8 @@ package logic;
 
 import java.util.ArrayList;
 
+import algorithm.Population;
+
 public class Utils {
 	
 	public static int byteToInt(Integer[] bits){
@@ -43,5 +45,7 @@ public class Utils {
 		return (int) Math.ceil(Math.log10(numberOfDays)/Math.log10(2));
 	}
 	
+
+
 }
 

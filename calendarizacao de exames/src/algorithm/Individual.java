@@ -54,7 +54,6 @@ public class Individual implements Comparable<Individual>{
 		
 	}
 	
-	
 
 	@Override
 	public int compareTo(Individual o) {
@@ -78,7 +77,8 @@ public class Individual implements Comparable<Individual>{
 			sb.append(",");
 		}
 		sb.append(chromossome[chromossome.length - 1]);
-		sb.append("]");
+		sb.append("] -------------------------------- Fitness = ");
+		sb.append(this.getFitness()).append("\n");
 		
 		return sb.toString();
 	}
