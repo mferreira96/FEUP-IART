@@ -2,6 +2,8 @@ package algorithm;
 
 import java.util.ArrayList;
 
+import javax.swing.Popup;
+
 import logic.Exame;
 import logic.Problem;
 import logic.Utils;
@@ -104,10 +106,21 @@ public class GeneticAlgorithm {
 	
 	}
 	
-	public void mutatePopulation(){
+	public Population mutatePopulation(Population population){
 		
 		// TODO mutate population
+		Population nPopulation = new Population(this.POPULATION_SIZE,this.chromossomeSize);
 		
+		
+		for(int i = 0 ; i < this.POPULATION_SIZE; i++){
+			
+			
+			
+			
+			
+		}
+		
+		return nPopulation;
 	}
 	
 	
@@ -119,6 +132,28 @@ public class GeneticAlgorithm {
 			
 			Individual p1 = population.getFittest(i);
 				
+			
+			if(this.CROSSOVER_RATE > Math.random()){
+				
+				Individual newInd = new Individual(this.chromossomeSize);
+				
+				Individual p2 = this.selectPartent(population);
+				
+				int breakIndex = (int)Math.random() * this.chromossomeSize;
+				
+				for(int j = 0; j < this.chromossomeSize; j++){
+					
+					if(j < breakIndex){
+						newInd.setGene(j, p1.getGene(j));
+					}else{
+						newInd.setGene(j, p2.getGene(j));
+					}
+				}
+				
+				nPopulation.addIndividual(newInd);
+			}else{
+				nPopulation.addIndividual(p1);
+			}
 			
 		}
 		
