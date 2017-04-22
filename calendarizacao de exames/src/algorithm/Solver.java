@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import logic.Exame;
 import logic.Problem;
+import logic.Student;
+import logic.Utils;
 
 public class Solver {
 
@@ -16,13 +18,32 @@ public class Solver {
 		double elitism_count = 0.2;
 		int days = 32;
 		
-		ArrayList<Exame> exams = new ArrayList<Exame>();
-		exams.add(new Exame(0,"LBAW",3));
-		exams.add(new Exame(1,"LTW",2));
-		exams.add(new Exame(2,"SDIS",3));
-		exams.add(new Exame(3,"PPIN",3));
 		
-		Problem problem = new Problem(exams,days);
+		/// DADOS
+		
+		Exame e1 = new Exame(0,"LBAW",3);
+		Exame e2 = new Exame(1,"LTW",2);
+		Exame e3 = new Exame(2,"SDIS",3);
+		Exame e4 = new Exame(3,"PPIN",3);
+				
+		Student s1 = new Student("joao",0,3);
+		Student s2 = new Student("maria",1,3);
+		Student s3 = new Student("jose", 2,3);
+		
+		e1.addStudent(s1); e1.addStudent(s2); e1.addStudent(s3);
+		e2.addStudent(s2);
+		e3.addStudent(s1); e3.addStudent(s2); e3.addStudent(s3);
+		e4.addStudent(s1); e4.addStudent(s2); e4.addStudent(s3);
+		
+		Problem problem = new Problem(days);
+		
+		problem.addExame(e1);
+		problem.addExame(e2);
+		problem.addExame(e3);
+		problem.addExame(e4);
+		
+		// -----------------------
+		
 		
 		GeneticAlgorithm ga = new GeneticAlgorithm(iterations, population_size, mutation_rate, crossover_rate, elitism_count, problem);
 		
@@ -48,9 +69,20 @@ public class Solver {
 			
 		}
 				
-		Individual ind = ga.getPopulation().getFittest(0);
+		Individual bestIndividual = ga.getPopulation().getFittest(0);
 		System.out.println("Final");
-		System.out.println("Fitness ....... "  + ind.getFitness());
+		System.out.println("Fitness ....... "  + bestIndividual .getFitness());
+		
+		
+		updateExameDate(problem, bestIndividual);
+		
+
+		
+		System.out.println("------------------------ PROBLEM ----------------------------");
+		
+		for(int  j = 0 ; j < problem.getNumberOfExames(); j++){
+			System.out.println(problem.getExame(j).toString());
+		}
 		
 	}
 	
@@ -59,5 +91,16 @@ public class Solver {
 		
 		// TODO deve ser desenvolvido ciclo do algoritmo para obter a soluçao aqui
 		
+	}
+	
+	public void updateExameDate(Problem problem, Individual bestIndividual){
+		
+		ArrayList<Integer[]> aux = Utils.splitChromossome(bestIndividual.getChromossome(), problem.getByteDays());
+		
+		
+		for(int i = 0 ; i < problem.getNumberOfExames(); i++){
+			int data = Utils.byteToInt(aux.get(i));
+			problem.getExame(i).setData(data);
+		}
 	}
 }

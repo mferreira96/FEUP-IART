@@ -21,14 +21,14 @@ public class Utils {
 	}
 	
 	
-	public static ArrayList<Integer[]> splitChromossome(Integer[] bits, int nIterations){
+	public static ArrayList<Integer[]> splitChromossome(Integer[] bits, int days){
 	
 		ArrayList<Integer[]> exameDates = new ArrayList<Integer[]>();
 		
-		int size = bits.length/nIterations;
+		int size = bits.length/days;
 		
 		
-		for (int i = 0; i < nIterations; i++) {
+		for (int i = 0; i < days; i++) {
 		
 			Integer[] date = new Integer[size];
 			

@@ -11,6 +11,7 @@ public class Exame {
 	private int id;
 	private int year;
 	private ArrayList<Student> students;
+	private int data;
 	
 	public Exame(int id ,String name, int year){
 		this.name = name;
@@ -19,6 +20,13 @@ public class Exame {
 		this.students = new ArrayList<Student>();
 	}
 		
+	public int getData() {
+		return data;
+	}
+	
+	public void setData(int data){
+		this.data = data;
+	}
 	
 	public String getName(){
 		return name;
@@ -54,6 +62,8 @@ public class Exame {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("Exam -> ").append("Id: ").append(getId()).append(" Name: ").append(getName()).append(" Year: ").append(getYear()).append("\n");
+		
+		sb.append("Data : ").append(this.data).append("\n");
 		
 		sb.append("Students: ");
 		

@@ -15,6 +15,7 @@ public class Evaluator {
 		ArrayList<Integer[]> exame_list = Utils.splitChromossome(ind.getChromossome(), problem.getNumberOfExames());//problem.getNumberOfExames() 
 		ArrayList<Integer> exame_days = new ArrayList<Integer>();
 	
+	
 		// tranform all Byte infomration into concrete info
 		for(int i = 0; i < exame_list.size(); i++){
 			exame_days.add(Utils.byteToInt(exame_list.get(i)));
@@ -26,7 +27,14 @@ public class Evaluator {
 		ArrayList<Integer> difference = new ArrayList<Integer>();
 		
 		for(int i = 0; i < exame_days.size() - 1 ; i++){
-			difference.add(exame_days.get(i + 1) - exame_days.get(i));
+			int diff = exame_days.get(i + 1) - exame_days.get(i);
+	
+			// in case of two exams on same day
+			if(diff == 0){
+				return -1;
+			}
+			
+			difference.add(diff);
 		}
 		
 		
