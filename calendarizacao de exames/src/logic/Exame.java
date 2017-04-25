@@ -50,7 +50,7 @@ public class Exame {
 			System.out.println("The student " + st.getName() + " is already assigned to this exame");
 		}else{
 			this.students.add(st);
-			System.out.println("Student " + st.getName() + "added to exame " + getName());
+			System.out.println("Student " + st.getName() + " added to exame " + getName());
 		}
 		
 	}

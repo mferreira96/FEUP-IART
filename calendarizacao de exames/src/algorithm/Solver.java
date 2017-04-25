@@ -42,8 +42,9 @@ public class Solver {
 		problem.addExame(e3);
 		problem.addExame(e4);
 		
-		// -----------------------
 		
+		// -----------------------
+
 		
 		GeneticAlgorithm ga = new GeneticAlgorithm(iterations, population_size, mutation_rate, crossover_rate, elitism_count, problem);
 		
@@ -83,7 +84,7 @@ public class Solver {
 		for(int  j = 0 ; j < problem.getNumberOfExames(); j++){
 			System.out.println(problem.getExame(j).toString());
 		}
-		
+
 	}
 	
 	
