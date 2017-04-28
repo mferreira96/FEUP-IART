@@ -2,11 +2,8 @@ package algorithm;
 
 import java.util.ArrayList;
 
-import javax.swing.Popup;
-
-import logic.Exame;
 import logic.Problem;
-import logic.Utils;
+import utils.Utils;
 
 public class GeneticAlgorithm {
 	
@@ -115,7 +112,6 @@ public class GeneticAlgorithm {
 			}
 		}
 	}
-	
 	
 	public void crossoverPopulation(){
 		Population population = this.getPopulation();

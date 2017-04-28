@@ -2,10 +2,10 @@ package algorithm;
 
 import java.util.ArrayList;
 
-import logic.Exame;
+import logic.Exam;
 import logic.Problem;
 import logic.Student;
-import logic.Utils;
+import utils.Utils;
 
 public class Solver {
 
@@ -21,10 +21,10 @@ public class Solver {
 		
 		/// DADOS
 		
-		Exame e1 = new Exame(0,"LBAW",3);
-		Exame e2 = new Exame(1,"LTW",2);
-		Exame e3 = new Exame(2,"SDIS",3);
-		Exame e4 = new Exame(3,"PPIN",3);
+		Exam e1 = new Exam(0,"LBAW",3);
+		Exam e2 = new Exam(1,"LTW",2);
+		Exam e3 = new Exam(2,"SDIS",3);
+		Exam e4 = new Exam(3,"PPIN",3);
 				
 		Student s1 = new Student("joao",0,3);
 		Student s2 = new Student("maria",1,3);
@@ -100,8 +100,8 @@ public class Solver {
 		
 		
 		for(int i = 0 ; i < problem.getNumberOfExames(); i++){
-			int data = Utils.byteToInt(aux.get(i));
-			problem.getExame(i).setData(data);
+			int date = Utils.byteToInt(aux.get(i));
+			problem.getExame(i).setDate(date);
 		}
 	}
 }

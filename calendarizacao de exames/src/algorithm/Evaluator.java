@@ -1,12 +1,11 @@
 package algorithm;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import logic.Exame;
+import logic.Exam;
 import logic.Problem;
 import logic.Student;
-import logic.Utils;
+import utils.Utils;
 
 public class Evaluator {
 
@@ -72,7 +71,7 @@ public class Evaluator {
 	 * 
 	 * */
 	
-	public static void verifyExams(Exame e1, Exame e2){
+	public static void verifyExams(Exam e1, Exam e2){
 		
 		ArrayList<Student> students1 = e1.getStudents();
 		ArrayList<Student> students2 = e2.getStudents();

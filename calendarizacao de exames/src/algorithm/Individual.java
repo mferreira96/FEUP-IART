@@ -21,12 +21,9 @@ public class Individual implements Comparable<Individual>{
 				this.setGene(i, 1);
 			}else{
 				this.setGene(i, 0);
-			}
-			
+			}			
 		}
-
-	}
-	
+	}	
 	
 	public Integer[] getChromossome() {
 		return chromossome;
@@ -48,24 +45,21 @@ public class Individual implements Comparable<Individual>{
 		fitness = fit;
 	}
 	
-	public void mutation(int index){
-			
+	public void mutation(int index){			
 		this.setGene(index , 1 - this.getGene(index));
 		
-	}
-	
+	}	
 
 	@Override
-	public int compareTo(Individual o) {
+	public int compareTo(Individual individual) {
 		
-		if(this.getFitness() > o.getFitness()){
+		if(this.getFitness() > individual.getFitness()){
 			return -1;
-		}else if(this.getFitness() < o.getFitness()){
+		}else if(this.getFitness() < individual.getFitness()){
 			return 1;
 		}else 
 			return 0;
-	}
-	
+	}	
 	
 	@Override
 	public String toString() {
@@ -81,7 +75,5 @@ public class Individual implements Comparable<Individual>{
 		sb.append(this.getFitness()).append("\n");
 		
 		return sb.toString();
-	}
-	
-	
+	}	
 }
