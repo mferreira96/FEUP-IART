@@ -11,11 +11,9 @@ public class Individual implements Comparable<Individual>{
 		this.fitness = -1;
 	
 		randomInitiator();
-	}
+	}	
 	
-	
-	public void randomInitiator(){
-	
+	public void randomInitiator(){	
 		for (int i = 0; i < chromossome.length; i++) {
 			if(Math.random() < 0.5){
 				this.setGene(i, 1);
@@ -46,13 +44,11 @@ public class Individual implements Comparable<Individual>{
 	}
 	
 	public void mutation(int index){			
-		this.setGene(index , 1 - this.getGene(index));
-		
+		this.setGene(index , 1 - this.getGene(index));		
 	}	
 
 	@Override
-	public int compareTo(Individual individual) {
-		
+	public int compareTo(Individual individual) {		
 		if(this.getFitness() > individual.getFitness()){
 			return -1;
 		}else if(this.getFitness() < individual.getFitness()){

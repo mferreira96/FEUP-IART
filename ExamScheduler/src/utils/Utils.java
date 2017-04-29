@@ -1,7 +1,15 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class Utils {
 	
@@ -42,15 +50,23 @@ public class Utils {
 	
 	public static int getNumberOfbitsNedded(int numberOfDays){
 		return (int) Math.ceil(Math.log10(numberOfDays)/Math.log10(2));
-	}
-	
+	}	
 
-    public static HashMap<Integer, Integer> sortByValue(HashMap<Integer, Integer> unsortMap) {
-
-    
+	/**
+	 * Returns the map sorted by value
+	 * 
+	 * @param map to be sorted
+	 * @return map sorted bye value
+	 */
+    public static HashMap<Integer, Integer> sortByValue(HashMap<Integer, Integer> map) { 
     	
-    	return null;	
+    	HashMap<Integer, Integer> sortedMap =
+                map.entrySet().stream()
+                   .sorted(Map.Entry.comparingByValue())
+                   .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                                (e1, e2) -> e1, LinkedHashMap::new));    		
     	
+    	return sortedMap;	    	
     }
 }
 

@@ -1,8 +1,6 @@
 package app;
 
-
 import algorithm.Solver;
-
 
 public class ExameSheduler {
 
@@ -14,6 +12,8 @@ public class ExameSheduler {
 
 	
 	solver.geneticAlgorithm();
+	
+	
 	
 	}
 }

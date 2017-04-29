@@ -1,10 +1,6 @@
 package algorithm;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 
 public class Population {
 
@@ -21,15 +17,12 @@ public class Population {
 		
 		initiatePopulation(this.populationSize, cromossomeLength);
 	
-	}
+	}	
 	
-	
-	public Population(int populationSize){
-		
+	public Population(int populationSize){		
 		this.individuals = new ArrayList<Individual>();
 		this.fitness = -1;
-		this.populationSize = populationSize;
-		
+		this.populationSize = populationSize;		
 	}
 	
 	public void initiatePopulation(int populationSize, int chromossomeLength){
@@ -37,8 +30,7 @@ public class Population {
 		for (int i = 0; i < populationSize; i++) {
 			
 			addIndividual(new Individual(chromossomeLength));
-		}
-	
+		}	
 	}
 	
 	public ArrayList<Individual> getIndividuals() {
@@ -47,44 +39,35 @@ public class Population {
 	
 	public void addIndividual(Individual ind){
 		individuals.add(ind);
-	}
-	
+	}	
 	
 	public double getPopulationFitness(){
 		return fitness;
-	}
-	
+	}	
 	
 	public int getPopulationSize() {
 		return populationSize;
-	}
-	
+	}	
 	
 	public void setPopulationFitness(double fitness){
 		this.fitness = fitness;
-	}
+	}	
 	
-	
-	public Individual getFittest(int index){
-		
+	public Individual getFittest(int index){		
 		this.getIndividuals().sort(null);
 		
 		return individuals.get(index);
 	}
-
 	
 	@Override
-	public String toString() {
-	
+	public String toString() {	
 		StringBuilder sb = new StringBuilder();
 		
 		for(int  i = 0 ; i < this.getPopulationSize() ; i++){
 			sb.append(this.getIndividuals().get(i).toString());
-		}
-		
+		}		
 		
 		sb.append("------------------------------------------------------------------------------------------ \n");
-		
 		
 		return sb.toString();
 	}

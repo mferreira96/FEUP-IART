@@ -1,6 +1,5 @@
 package logic;
 
-
 public class Student {
 
 	private String name;
@@ -26,9 +25,7 @@ public class Student {
 	}
 	
 	@Override
-	public String toString() {
-		
-		
+	public String toString() {		
 		StringBuilder sb = new StringBuilder().append("Student: ").append("Id: ").append(getId()).append(" Name: ").append(getName());
 		
 		sb.append(" Current year: ").append(getCurrentYear()).append("\n");

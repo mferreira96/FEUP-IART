@@ -24,14 +24,10 @@ public class GeneticAlgorithm {
 		this.CROSSOVER_RATE = crossover_rate;
 		this.ELITISM_COUNT = elitism_count;
 		this.POPULATION_SIZE = population_size;
-
 		
-		this.problem = problem;
-		
-		this.chromossomeSize = Utils.getNumberOfbitsNedded(this.problem.getNumberOfDays()) * problem.getNumberOfExames();
-		
-		this.population = new Population(this.POPULATION_SIZE,this.chromossomeSize);
-		
+		this.problem = problem;		
+		this.chromossomeSize = Utils.getNumberOfbitsNedded(this.problem.getNumberOfDays()) * problem.getNumberOfExames();		
+		this.population = new Population(this.POPULATION_SIZE,this.chromossomeSize);		
 		this.numberOfIteration= 0;
 	}
 	
@@ -79,8 +75,7 @@ public class GeneticAlgorithm {
 		numberOfIteration++;
 	}
 	
-	public void evalPopulation(){
-		
+	public void evalPopulation(){		
 		double fitness = 0;
 		
 		for(int i = 0;  i< population.getIndividuals().size();i++){
@@ -91,9 +86,7 @@ public class GeneticAlgorithm {
 		population.setPopulationFitness(fitness);
 	}
 	
-	public double calcFitness(Individual ind){
-		
-		
+	public double calcFitness(Individual ind){		
 		double fit = Evaluator.calculateFitness(ind, this.problem);
 		ind.setFitness(fit);
 		
@@ -118,21 +111,15 @@ public class GeneticAlgorithm {
 		
 		Population nPopulation = new Population(this.POPULATION_SIZE);
 		
-		for(int i = 0 ; i < this.POPULATION_SIZE; i++){
+		for(int i = 0 ; i < this.POPULATION_SIZE; i++){			
+			Individual p1 = population.getFittest(i);				
 			
-			Individual p1 = population.getFittest(i);
+			if(this.CROSSOVER_RATE > Math.random()){				
+				Individual newInd = new Individual(this.chromossomeSize);				
+				Individual p2 = this.selectParent(population);				
+				int breakIndex = (int)Math.random() * this.chromossomeSize;	
 				
-			
-			if(this.CROSSOVER_RATE > Math.random()){
-				
-				Individual newInd = new Individual(this.chromossomeSize);
-				
-				Individual p2 = this.selectPartent(population);
-				
-				int breakIndex = (int)Math.random() * this.chromossomeSize;
-				
-				for(int j = 0; j < this.chromossomeSize; j++){
-					
+				for(int j = 0; j < this.chromossomeSize; j++){					
 					if(j < breakIndex){
 						newInd.setGene(j, p1.getGene(j));
 					}else{
@@ -143,25 +130,20 @@ public class GeneticAlgorithm {
 				nPopulation.addIndividual(newInd);
 			}else{
 				nPopulation.addIndividual(p1);
-			}
-			
-		}
+			}			
+		}		
 		
-		
-		this.setPopulation(nPopulation);;	
+		this.setPopulation(nPopulation);	
 	}
 	
-	
-	public boolean isTerminated(){
-		
+	public boolean isTerminated(){		
 		if(this.getNumberOfIteration() > this.getMAX_ITERATIONS())
 			return true;
 		else
 			return false;
 	}
 	
-	public Individual selectPartent(Population population){
-		
+	public Individual selectParent(Population population){		
 		
 		// should be already ordered
 		ArrayList<Individual> individuals = population.getIndividuals();
