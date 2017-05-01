@@ -1,6 +1,8 @@
 package algorithm;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 import logic.Exam;
 import logic.Problem;
@@ -87,10 +89,42 @@ public class Solver {
 
 	}
 	
-	
-	public void simulatedAnnealing(){
+	// TODO - CORRIGIR PARAMETROS DA CLASSE (PASSAR AQUI AS VARIAVEIS DE INICIO E FIM DO PERIODO DE EXAMES)
+	public void simulatedAnnealing(int startingDay, int endDay, int numExams){
+		// TODO - VARIAVEIS INICIAIS - PASSAR ESTAS VARIAVEIS ATRAVES DOS PARAMETROS DA FUNÇÃO???
+		// TODO - CRIAR FUNÇAO OBJETIVO(CUSTO)
+		// TODO - DEFINIR OUTRO VALOR DE COOLING RATE??
+		double temperature = 50;
+		double coolingRate = 0.9;
+		// TODO - key do exame - dia - usar linkedhashmap (preserva ordem com que elemento foram inseridos)
+		HashMap<Integer, Integer> initialSolution= new HashMap<Integer, Integer>();
+		initialSolution.put(0, 3);
+		initialSolution.put(1, 2);
+		initialSolution.put(0, 3);
+		initialSolution.put(1, 2);
 		
-		// TODO deve ser desenvolvido ciclo do algoritmo para obter a soluçao aqui
+		
+		
+		
+		
+		
+		Random random = new Random();
+		int value = random.nextInt(5);
+		
+		
+		while(true){
+			double change = 0;
+			if (random.nextDouble() < Math.pow(Math.E, -change / temperature))
+				return;
+			
+		}
+		
+		
+		
+		
+		
+		
+		
 		
 	}
 	

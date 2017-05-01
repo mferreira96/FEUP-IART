@@ -26,7 +26,7 @@ public class GeneticAlgorithm {
 		this.POPULATION_SIZE = population_size;
 		
 		this.problem = problem;		
-		this.chromossomeSize = Utils.getNumberOfbitsNedded(this.problem.getNumberOfDays()) * problem.getNumberOfExames();		
+		this.chromossomeSize = Utils.getNumberOfbitsNeeded(this.problem.getNumberOfDays()) * problem.getNumberOfExames();		
 		this.population = new Population(this.POPULATION_SIZE,this.chromossomeSize);		
 		this.numberOfIteration= 0;
 	}

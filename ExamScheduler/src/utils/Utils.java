@@ -1,16 +1,10 @@
 package utils;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
-import java.util.Optional;
-
 public class Utils {
 	
 	public static int byteToInt(Integer[] bits){
@@ -48,7 +42,7 @@ public class Utils {
 		
 	}
 	
-	public static int getNumberOfbitsNedded(int numberOfDays){
+	public static int getNumberOfbitsNeeded(int numberOfDays){
 		return (int) Math.ceil(Math.log10(numberOfDays)/Math.log10(2));
 	}	
 

@@ -13,13 +13,13 @@ public class Problem {
 	public Problem(ArrayList<Exam> exames,int numberOfDays){		
 		this.exames = exames;
 		this.numberOfDays = numberOfDays;
-		this.byteDays = Utils.getNumberOfbitsNedded(numberOfDays);
+		this.byteDays = Utils.getNumberOfbitsNeeded(numberOfDays);
 	}
 	
 	public Problem(int numberOfDays){		
 		this.exames = new ArrayList<Exam>();
 		this.numberOfDays = numberOfDays;
-		this.byteDays = Utils.getNumberOfbitsNedded(numberOfDays);		
+		this.byteDays = Utils.getNumberOfbitsNeeded(numberOfDays);		
 	}
 	
 	public int getByteDays() {
