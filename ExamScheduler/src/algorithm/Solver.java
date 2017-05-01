@@ -94,38 +94,49 @@ public class Solver {
 		// TODO - VARIAVEIS INICIAIS - PASSAR ESTAS VARIAVEIS ATRAVES DOS PARAMETROS DA FUNÇÃO???
 		// TODO - CRIAR FUNÇAO OBJETIVO(CUSTO)
 		// TODO - DEFINIR OUTRO VALOR DE COOLING RATE??
-		double temperature = 50;
+		double temperature = 400;
 		double coolingRate = 0.9;
 		// TODO - key do exame - dia - usar linkedhashmap (preserva ordem com que elemento foram inseridos)
-		HashMap<Integer, Integer> initialSolution= new HashMap<Integer, Integer>();
-		initialSolution.put(0, 3);
-		initialSolution.put(1, 2);
-		initialSolution.put(0, 3);
-		initialSolution.put(1, 2);
+		HashMap<Integer, Integer> solution= new HashMap<Integer, Integer>();
+		solution.put(0, 3);
+		solution.put(1, 18);
+		solution.put(2, 15);
+		solution.put(3, 6);
+		solution.put(4, 1);
+		solution.put(5, 9);
+		solution.put(6, 7);
+		solution.put(7, 2);
 		
+		System.out.println("dkhsajdhaskjdha");
 		
-		
-		
-		
-		
+			
 		Random random = new Random();
 		int value = random.nextInt(5);
 		
-		
-		while(true){
-			double change = 0;
-			if (random.nextDouble() < Math.pow(Math.E, -change / temperature))
-				return;
+		// TODO - CORRIGIR
+		while(temperature > 0.5){
+			int examToChange = random.nextInt(numExams);
+			int newExameDay = random.nextInt(endDay-startingDay)+startingDay;
 			
+			HashMap<Integer, Integer> newSolution = new HashMap<Integer, Integer>();
+			solution.forEach(newSolution::putIfAbsent);			
+			newSolution.put(examToChange, newExameDay);
+			
+			// TODO - FALTA APENAS CALCULAR CUSTO DE CADA CONFIGURAÇAO DE ESTADOS
+			int value1 = SimulatedAnnealing.getDiff(solution, numExams);
+			int value2 = SimulatedAnnealing.getDiff(newSolution, numExams);
+			
+			System.out.println(value1);
+			
+			double change = value2 - value1;
+			if ((change < 0) || (random.nextDouble() < Math.pow(Math.E, -change / temperature)))
+				solution = newSolution;
+			
+			
+			temperature = coolingRate * temperature;			
 		}
 		
-		
-		
-		
-		
-		
-		
-		
+		System.out.println(solution);		
 	}
 	
 	public void updateExameDate(Problem problem, Individual bestIndividual){

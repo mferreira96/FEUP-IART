@@ -11,7 +11,9 @@ public class ExameSheduler {
 	Solver solver = new Solver();	
 
 	
-	solver.geneticAlgorithm();
+	//solver.geneticAlgorithm();
+	
+	solver.simulatedAnnealing(1, 20, 8);
 	
 	
 	
