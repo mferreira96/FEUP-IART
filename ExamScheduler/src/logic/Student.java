@@ -1,15 +1,20 @@
 package logic;
 
+import java.util.ArrayList;
+
 public class Student {
 
 	private String name;
 	private int id;
 	private int currentYear;
+	private ArrayList<Exam> exams;
+	boolean hasDisciplinesToDo = false;
 	
-	public Student(String name, int id, int currentYear){
-		this.name = name;
+	public Student(int id, String name, int currentYear){
 		this.id = id;
+		this.name = name;
 		this.currentYear = currentYear;
+		this.exams = new ArrayList<Exam>();
 	}
 	
 	public String getName() {
@@ -22,6 +27,21 @@ public class Student {
 
 	public int getCurrentYear() {
 		return currentYear;
+	}
+	
+	public void addExam(Exam exam){
+		exams.add(exam);
+		
+		if(currentYear == exam.getYear())
+			hasDisciplinesToDo = true;
+	}
+	
+	public ArrayList<Exam> getExams(){
+		return exams;
+	}
+	
+	public boolean hasDisciplinesToDo(){
+		return hasDisciplinesToDo;
 	}
 	
 	@Override

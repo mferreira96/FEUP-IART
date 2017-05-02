@@ -13,8 +13,8 @@ public class ExameSheduler {
 	
 	//solver.geneticAlgorithm();
 	
+	// TODO - CORRIGIR CHAMDA
 	solver.simulatedAnnealing(1, 20, 8);
-	
 	
 	
 	}

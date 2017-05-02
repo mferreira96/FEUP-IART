@@ -58,9 +58,7 @@ public class Evaluator {
 		fitness += difference.get(difference.size() - 1);
 		
 		
-		return fitness;
-	
-		
+		return fitness;		
 	}
 	
 	/*
@@ -91,8 +89,6 @@ public class Evaluator {
 				}
 			}
 		
-		}
-		
+		}		
 	}
-	
 }

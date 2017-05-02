@@ -10,7 +10,7 @@ public class Exam {
 	private ArrayList<Student> students;
 	private int date;
 	
-	public Exam(int id ,String name, int year){
+	public Exam(int id, String name, int year){
 		this.name = name;
 		this.id = id;
 		this.year = year;
