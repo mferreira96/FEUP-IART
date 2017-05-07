@@ -2,20 +2,35 @@ package algorithm;
 
 import java.util.ArrayList;
 
+import org.jgrapht.Graph;
+import org.jgrapht.alg.util.Pair;
+
 import logic.Exam;
 import logic.Problem;
 import logic.Student;
+
 import utils.Utils;
 
 public class Evaluator {
 
-	private static int students_from_same_year;
-	private static int students_from_different_year;
+
+	private static Graph<Pair<Integer,Integer>, Pair<Integer, Integer>> graph;
+	
+	
+	public static void createGraph(ArrayList<Exam> exams, ArrayList<Integer> days){
+		
+
+		for(int i= 0; i < exams.size() ; i++){
+			Pair<Integer, Integer> pair = new Pair<Integer, Integer>(i , days.get(i));
+			graph.addVertex(pair);
+			
+		}
+		
+	}
+	
 	
 	public static double calculateFitness(Individual ind, Problem problem){
 		
-		students_from_same_year = 0;
-		students_from_different_year = 0;
 		
 		//HashMap<Integer, Integer> exams = new HashMap<Integer,Integer>();
 		
@@ -69,26 +84,31 @@ public class Evaluator {
 	 * 
 	 * */
 	
-	public static void verifyExams(Exam e1, Exam e2){
+	public static Pair<Integer,Integer> verifyExams(Exam e1, Exam e2){
 		
 		ArrayList<Student> students1 = e1.getStudents();
 		ArrayList<Student> students2 = e2.getStudents();
 		
+		int same_year = 0;
+		int diff_year = 0;
 		
 		for(int i = 0; i < students1.size(); i++){
 			
 			if(students2.contains(students1.get(i))){
 				if(e1.getYear() == e2.getYear()){
 					if(e1.getYear() == students1.get(i).getCurrentYear()){
-						students_from_same_year ++;
+						same_year++;
 					}else{
-						students_from_different_year ++;
+						diff_year++;
 					}
 				}else{
-					students_from_different_year ++;
+					diff_year++;
 				}
 			}
 		
 		}		
+		
+		
+		return new Pair<Integer, Integer>(same_year, diff_year);
 	}
 }
