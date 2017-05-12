@@ -87,7 +87,9 @@ public class GeneticAlgorithm {
 	}
 	
 	public double calcFitness(Individual ind){		
-		double fit = Evaluator.calculateFitness(ind, this.problem);
+		Evaluator evaluator = Evaluator.getInstance();
+		
+		double fit = evaluator.calculateFitness(ind, this.problem);
 		ind.setFitness(fit);
 		
 		return fit;

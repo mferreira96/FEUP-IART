@@ -2,9 +2,11 @@ package algorithm;
 
 import java.util.ArrayList;
 
-import org.jgrapht.Graph;
 import org.jgrapht.alg.util.Pair;
 
+import graph.EdgeScheduler;
+import graph.GraphScheuler;
+import graph.VertexScheduler;
 import logic.Exam;
 import logic.Problem;
 import logic.Student;
@@ -14,77 +16,64 @@ import utils.Utils;
 public class Evaluator {
 
 
-	private static Graph<Pair<Integer,Integer>, Pair<Integer, Integer>> graph;
+	private  GraphScheuler graph;
 	
+	private static Evaluator evaluator = new Evaluator(); 
+	private final Integer P_SAME_YEAR = 9;
+	private final Integer P_DIFF_YEAR = 3;
+	private final Integer P_DAY = 9;
 	
-	public static void createGraph(ArrayList<Exam> exams, ArrayList<Integer> days){
+	public Evaluator(){
+		this.graph = new GraphScheuler();
+	}
+	
+	public static Evaluator getInstance(){
 		
+		if(evaluator == null){
+			return new Evaluator();
+		}else {
+			return evaluator;
+		}
+	}
+	
+	// should not be ordered, this way the positions will match
+	public void createGraph(ArrayList<Exam> exams, ArrayList<Integer> days){
+		
+		addAllVertexs(exams, days);
+		addAllNodes(this.graph.getNodes());
 
-		for(int i= 0; i < exams.size() ; i++){
-			Pair<Integer, Integer> pair = new Pair<Integer, Integer>(i , days.get(i));
-			graph.addVertex(pair);
-			
+	}
+	
+	private void addAllVertexs(ArrayList<Exam> exams, ArrayList<Integer> days){
+		
+		for(int i = 0 ; i < exams.size(); i++){
+			this.graph.addVertex(new VertexScheduler(exams.get(i), days.get(i)));
 		}
 		
 	}
 	
-	
-	public static double calculateFitness(Individual ind, Problem problem){
+	private void addAllNodes(ArrayList<VertexScheduler> vertexs){
 		
 		
-		//HashMap<Integer, Integer> exams = new HashMap<Integer,Integer>();
-		
-		double fitness = 0;
-		
-		ArrayList<Integer[]> exame_list = Utils.splitChromossome(ind.getChromossome(), problem.getNumberOfExames());//problem.getNumberOfExames() 
-		ArrayList<Integer> exame_days = new ArrayList<Integer>();
+		for(int i = 0 ; i < vertexs.size(); i++){
 			
-		// tranform all Byte infomration into concrete info
-		for(int i = 0; i < exame_list.size(); i++){
-			//exams.put(i, Utils.byteToInt(exame_list.get(i)));
-			exame_days.add(Utils.byteToInt(exame_list.get(i)));
-		}
-		
-		exame_days.sort(null); // order arraylist
-		
-		
-		// --------------------------------------
-		
-		
-		ArrayList<Integer> difference = new ArrayList<Integer>();
-		
-		for(int i = 0; i < exame_days.size() - 1 ; i++){
-			int diff = exame_days.get(i + 1) - exame_days.get(i);
-	
-			// in case of two exams on same day
-			if(diff == 0){
-				return -1;
+			for(int  j = i + 1 ; j < vertexs.size(); j++){
+				
+				Pair<Integer, Integer> p = verifyExams(vertexs.get(i).getExam(), vertexs.get(j).getExam());
+				
+				EdgeScheduler edge = new EdgeScheduler(vertexs.get(j), vertexs.get(i), p.getFirst(), p.getSecond()); 
+				
+				vertexs.get(i).addAdjs(edge);
+				vertexs.get(j).addAdjs(edge);
+				
+				this.graph.addEdge(edge);
 			}
-			
-			difference.add(diff);
 		}
 		
-		
-		// try to arrange something bettes
-		difference.sort(null);
-
-		fitness += 2 * difference.get(0); 
-		
-		fitness += difference.get(difference.size() - 1);
-		
-		
-		return fitness;		
 	}
+
 	
-	/*
-	 * 
-	 *  - Evitar que haja exames consecutivos
-	 *  - maximizar a distancia quando ha alunos em comum
-	 *  - dar primazia a estudantes com exame no mesmo ano
-	 * 
-	 * */
-	
-	public static Pair<Integer,Integer> verifyExams(Exam e1, Exam e2){
+	private Pair<Integer,Integer> verifyExams(Exam e1, Exam e2){
 		
 		ArrayList<Student> students1 = e1.getStudents();
 		ArrayList<Student> students2 = e2.getStudents();
@@ -109,6 +98,40 @@ public class Evaluator {
 		}		
 		
 		
-		return new Pair<Integer, Integer>(same_year, diff_year);
+		return new Pair<Integer, Integer>(diff_year, same_year);
 	}
+	
+	
+	public void updateDays(ArrayList<Integer> days){
+		this.graph.updateAllNodes(days);
+	}
+	
+	
+	public double calculateFitness(Individual ind, Problem problem){
+		
+		
+		double fitness = 0;
+		
+		ArrayList<Integer[]> exame_list = Utils.splitChromossome(ind.getChromossome(), problem.getNumberOfExames()); 
+		ArrayList<Integer> exame_days = new ArrayList<Integer>();
+			
+		for(int i = 0; i < exame_list.size(); i++){
+			exame_days.add(Utils.byteToInt(exame_list.get(i)));
+		}
+		
+		this.updateDays(exame_days);
+		
+		for(int j = 0 ; j < exame_list.size(); j++){
+		
+		// TODO arranjar uma forma de eu nao ter os exames ordenados, porque eu preciso de fazer a diferencça dos dias...		
+			// - Possivel solução por o peso todo no edge, desta forma seria apenas somar
+			
+		}
+		
+		
+		return fitness;		
+	}
+	
+
+
 }
