@@ -1,5 +1,6 @@
 package app;
 
+import algorithm.Evaluator;
 import algorithm.Solver;
 
 public class ExameSheduler {
@@ -9,12 +10,11 @@ public class ExameSheduler {
 
 				
 	Solver solver = new Solver();	
-
 	
-	//solver.geneticAlgorithm();
+	solver.geneticAlgorithm();
 	
 	// TODO - CORRIGIR CHAMDA
-	solver.simulatedAnnealing(1, 20, 8);
+	//solver.simulatedAnnealing(1, 20, 8);
 	
 	
 	}

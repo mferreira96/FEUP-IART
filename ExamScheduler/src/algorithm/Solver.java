@@ -13,10 +13,10 @@ public class Solver {
 
 	public void geneticAlgorithm(){
 				
-		int iterations = 1;
+		int iterations = 3;
 		int population_size = 10;
-		double mutation_rate = 0.5;
-		double crossover_rate = 0.3;
+		double mutation_rate = 0.6;
+		double crossover_rate = 0.7;
 		double elitism_count = 0.2;
 		int days = 32;
 		
@@ -32,10 +32,10 @@ public class Solver {
 		Student s2 = new Student(1, "maria", 3);
 		Student s3 = new Student(2, "jose", 3);
 		
-		e1.addStudent(s1); e1.addStudent(s2); e1.addStudent(s3);
+		e1.addStudent(s1); e1.addStudent(s3);
 		e2.addStudent(s2);
-		e3.addStudent(s1); e3.addStudent(s2); e3.addStudent(s3);
-		e4.addStudent(s1); e4.addStudent(s2); e4.addStudent(s3);
+		e3.addStudent(s1); e3.addStudent(s3); 
+		e4.addStudent(s1); e4.addStudent(s3);
 		
 		Problem problem = new Problem(days);
 		
@@ -44,6 +44,10 @@ public class Solver {
 		problem.addExame(e3);
 		problem.addExame(e4);
 		
+		
+		Evaluator ev = Evaluator.getInstance();
+		
+		ev.createGraph(problem.getExames());
 		
 		// -----------------------
 

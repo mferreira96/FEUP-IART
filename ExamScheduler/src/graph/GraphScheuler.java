@@ -39,4 +39,11 @@ public class GraphScheuler {
 			nodes.get(i).setDay(days.get(i));
 		}
 	}
+	
+	public void updateUnColored(){
+		
+		for(int i = 0 ; i < nodes.size(); i++){
+			nodes.get(i).setColored(false);
+		}
+	}
 }

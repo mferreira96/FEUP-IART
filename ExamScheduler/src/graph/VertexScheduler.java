@@ -1,5 +1,6 @@
 package graph;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import logic.Exam;
@@ -7,16 +8,18 @@ import logic.Exam;
 public class VertexScheduler {
 
 	private int day;
-	private LinkedList<EdgeScheduler> adjs;
+	private ArrayList<EdgeScheduler> adjs;
 	private Exam exam;
+	private Boolean colored;
 	
 	public VertexScheduler(Exam exam, int day){
 		this.exam =	exam;
 		this.day = day;
-		this.adjs = new LinkedList<EdgeScheduler>();
+		this.adjs = new ArrayList<EdgeScheduler>();
+		this.colored = false;
 	}
 	
-	public LinkedList<EdgeScheduler> getAdjs() {
+	public ArrayList<EdgeScheduler> getAdjs() {
 		return adjs;
 	}
 	
@@ -40,5 +43,15 @@ public class VertexScheduler {
 		this.adjs.add(edge);
 	}
 
+	public Boolean getColored() {
+		return colored;
+	}
 	
+	public void setColored(Boolean flag){
+		this.colored = flag;
+	}
+	
+	public int numberOfConnections(){
+		return this.adjs.size();
+	}
 }

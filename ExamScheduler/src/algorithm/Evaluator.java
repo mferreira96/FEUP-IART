@@ -22,6 +22,7 @@ public class Evaluator {
 	private final Integer P_SAME_YEAR = 9;
 	private final Integer P_DIFF_YEAR = 3;
 	private final Integer P_DAY = 9;
+	private final Integer P_ZERO_CHILDS = 10;
 	
 	public Evaluator(){
 		this.graph = new GraphScheuler();
@@ -37,21 +38,24 @@ public class Evaluator {
 	}
 	
 	// should not be ordered, this way the positions will match
-	public void createGraph(ArrayList<Exam> exams, ArrayList<Integer> days){
+	public void createGraph(ArrayList<Exam> exams){
 		
-		addAllVertexs(exams, days);
+		addAllVertexs(exams);
 		addAllNodes(this.graph.getNodes());
 
 	}
 	
-	private void addAllVertexs(ArrayList<Exam> exams, ArrayList<Integer> days){
+	
+	// checked
+	private void addAllVertexs(ArrayList<Exam> exams){
 		
 		for(int i = 0 ; i < exams.size(); i++){
-			this.graph.addVertex(new VertexScheduler(exams.get(i), days.get(i)));
+			this.graph.addVertex(new VertexScheduler(exams.get(i), 0));
 		}
 		
 	}
 	
+	// checked
 	private void addAllNodes(ArrayList<VertexScheduler> vertexs){
 		
 		
@@ -61,12 +65,16 @@ public class Evaluator {
 				
 				Pair<Integer, Integer> p = verifyExams(vertexs.get(i).getExam(), vertexs.get(j).getExam());
 				
-				EdgeScheduler edge = new EdgeScheduler(vertexs.get(j), vertexs.get(i), p.getFirst(), p.getSecond()); 
+				// only create an edge if there is students in common between exams
 				
-				vertexs.get(i).addAdjs(edge);
-				vertexs.get(j).addAdjs(edge);
-				
-				this.graph.addEdge(edge);
+				if(p.getFirst() > 0 || p.getSecond() > 0){
+					EdgeScheduler edge = new EdgeScheduler(vertexs.get(j), vertexs.get(i), p.getFirst(), p.getSecond()); 
+					
+					vertexs.get(i).addAdjs(edge);
+					vertexs.get(j).addAdjs(edge);
+					
+					this.graph.addEdge(edge);
+				}
 			}
 		}
 		
@@ -106,7 +114,13 @@ public class Evaluator {
 		this.graph.updateAllNodes(days);
 	}
 	
+	private void updateUnColored() {
+		this.graph.updateUnColored();
+		
+	}
 	
+	
+	// not tested yet
 	public double calculateFitness(Individual ind, Problem problem){
 		
 		
@@ -120,18 +134,53 @@ public class Evaluator {
 		}
 		
 		this.updateDays(exame_days);
+		this.updateUnColored();
 		
-		for(int j = 0 ; j < exame_list.size(); j++){
+		for(int j = 0 ; j < this.graph.getNodes().size(); j++){
 		
-		// TODO arranjar uma forma de eu nao ter os exames ordenados, porque eu preciso de fazer a diferencça dos dias...		
-			// - Possivel solução por o peso todo no edge, desta forma seria apenas somar
+			VertexScheduler node = this.graph.getNodes().get(j);
+			int childs = node.numberOfConnections();  
+			
+
+			
+			if(childs > 0){
+				int edgeID = 0;
+				int diffDay = 365;
+				
+				for(int k = 0 ; k < childs ; k++){
+					VertexScheduler v = node.getAdjs().get(k).getTarget();
+					
+					if(!v.getColored()){
+						int tempDiff = Math.abs(v.getDay() - node.getDay()); 
+						
+						if(tempDiff > diffDay){
+							edgeID = k;
+							diffDay = tempDiff;
+						}
+					}
+				}
+					
+				fitness += diffDay * P_DAY;
+				
+				fitness += node.getAdjs().get(edgeID).getDiff_year() * P_DIFF_YEAR;
+				fitness += node.getAdjs().get(edgeID).getSame_year() * P_SAME_YEAR;
+				
+				this.graph.getNodes().get(j).setColored(true);
+			
+			}else{
+				
+				fitness += P_ZERO_CHILDS;
+				this.graph.getNodes().get(j).setColored(true);
+			}
 			
 		}
+		
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
+		
 		
 		
 		return fitness;		
 	}
-	
 
 
 }
