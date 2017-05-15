@@ -1,4 +1,4 @@
-package app;
+package cli;
 
 import algorithm.Evaluator;
 import algorithm.Solver;
