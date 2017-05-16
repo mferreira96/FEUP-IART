@@ -58,7 +58,7 @@ public class Exam {
 		
 		sb.append("Exam -> ").append("Id: ").append(getId()).append(" Name: ").append(getName()).append(" Year: ").append(getYear()).append("\n");		
 		sb.append("Data : ").append(this.date).append("\n");		
-		sb.append("Students: ");	
+		sb.append("Students: ").append("\n");	
 		
 		for(int i = 0; i  < students.size(); i++)			
 			sb.append("    ").append(students.get(i));	

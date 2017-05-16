@@ -68,12 +68,14 @@ public class Evaluator {
 				// only create an edge if there is students in common between exams
 				
 				if(p.getFirst() > 0 || p.getSecond() > 0){
-					EdgeScheduler edge = new EdgeScheduler(vertexs.get(j), vertexs.get(i), p.getFirst(), p.getSecond()); 
+					EdgeScheduler edge1 = new EdgeScheduler(vertexs.get(j), vertexs.get(i), p.getFirst(), p.getSecond()); 
 					
-					vertexs.get(i).addAdjs(edge);
-					vertexs.get(j).addAdjs(edge);
+					EdgeScheduler edge2 = new EdgeScheduler(vertexs.get(i), vertexs.get(j), p.getFirst(), p.getSecond()); 
+				
+					vertexs.get(i).addAdjs(edge1);
+					vertexs.get(j).addAdjs(edge2);
 					
-					this.graph.addEdge(edge);
+					this.graph.addEdge(edge1);
 				}
 			}
 		}
@@ -136,19 +138,27 @@ public class Evaluator {
 		this.updateDays(exame_days);
 		this.updateUnColored();
 		
+		System.out.println("............... HELLO ............");
+
+		
 		for(int j = 0 ; j < this.graph.getNodes().size(); j++){
 		
 			VertexScheduler node = this.graph.getNodes().get(j);
 			int childs = node.numberOfConnections();  
 			
-
+			System.out.println("taking care of");
+			System.out.println(node.toString());
 			
 			if(childs > 0){
+				
 				int edgeID = 0;
-				int diffDay = 365;
+				int diffDay = 0;
 				
 				for(int k = 0 ; k < childs ; k++){
 					VertexScheduler v = node.getAdjs().get(k).getTarget();
+
+					System.out.println("son ...");
+					System.out.println(v.toString());
 					
 					if(!v.getColored()){
 						int tempDiff = Math.abs(v.getDay() - node.getDay()); 
@@ -159,11 +169,20 @@ public class Evaluator {
 						}
 					}
 				}
-					
+				
+				System.out.println("diff_day = " + diffDay); 
+				
 				fitness += diffDay * P_DAY;
+				
+				System.out.println("k = " + edgeID);
+				
 				
 				fitness += node.getAdjs().get(edgeID).getDiff_year() * P_DIFF_YEAR;
 				fitness += node.getAdjs().get(edgeID).getSame_year() * P_SAME_YEAR;
+				
+				
+		
+				
 				
 				this.graph.getNodes().get(j).setColored(true);
 			
@@ -175,9 +194,10 @@ public class Evaluator {
 			
 		}
 		
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
 		
 		
+		System.out.println("............... BYE ............");
+
 		
 		return fitness;		
 	}

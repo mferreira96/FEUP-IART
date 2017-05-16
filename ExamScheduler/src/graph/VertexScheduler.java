@@ -54,4 +54,17 @@ public class VertexScheduler {
 	public int numberOfConnections(){
 		return this.adjs.size();
 	}
+	
+	@Override
+	public String toString() {
+	
+		StringBuilder sb = new StringBuilder();
+		sb.append(getExam().toString()).append("\n");
+		sb.append("day = " + day).append("\n");
+		sb.append("connections = " + this.adjs.size()).append("\n");
+		sb.append("colored = " + this.colored).append("\n");
+		
+		
+		return sb.toString();
+	}
 }

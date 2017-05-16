@@ -44,5 +44,20 @@ public class EdgeScheduler {
 		this.to = to;
 		
 	}
+	
+	
+	@Override
+	public String toString() {
+	
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("diff_year = " + diff_year).append("\n");
+		sb.append("same_year = " + same_year).append("\n");
+		sb.append("from = " + getSource().getExamId()).append("\n");
+		sb.append("target = " + getTarget().getExamId()).append("\n");
+		
+		
+		return sb.toString();
+	}
 
 }

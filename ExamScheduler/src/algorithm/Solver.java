@@ -13,7 +13,7 @@ public class Solver {
 
 	public void geneticAlgorithm(){
 				
-		int iterations = 3;
+		int iterations = 1;
 		int population_size = 10;
 		double mutation_rate = 0.6;
 		double crossover_rate = 0.7;
