@@ -3,7 +3,7 @@ package cli;
 import algorithm.Evaluator;
 import algorithm.Solver;
 
-public class ExameSheduler {
+public class ExamSheduler {
 
 	
 	public static void main(String[] args) {
