@@ -8,12 +8,14 @@ public class GraphScheuler {
 	
 	private ArrayList<VertexScheduler> nodes;
 	private ArrayList<EdgeScheduler> edges;
+	private Integer edgeId;
+	
 	
 	public GraphScheuler() {
 		
 		nodes = new ArrayList<VertexScheduler>();
 		edges = new ArrayList<EdgeScheduler>();
-		
+		edgeId = -1;
 	}
 		
 
@@ -25,12 +27,18 @@ public class GraphScheuler {
 		return nodes;
 	}
 	
+	public EdgeScheduler getEdge(int i){
+		return this.edges.get(i);
+	}
+	
 	public void addVertex(VertexScheduler vertex){
 		nodes.add(vertex);
 	}
 	
-	public void addEdge(EdgeScheduler edge){
+	public int addEdge(EdgeScheduler edge){
 		edges.add(edge);
+		edgeId++;
+		return edgeId;
 	}
 	
 	public void updateAllNodes(ArrayList<Integer> days){

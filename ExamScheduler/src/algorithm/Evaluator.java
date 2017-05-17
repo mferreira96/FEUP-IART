@@ -19,10 +19,10 @@ public class Evaluator {
 	private  GraphScheuler graph;
 	
 	private static Evaluator evaluator = new Evaluator(); 
-	private final Integer P_SAME_YEAR = 9;
+	private final Integer P_SAME_YEAR = 12;
 	private final Integer P_DIFF_YEAR = 3;
-	private final Integer P_DAY = 9;
-	private final Integer P_ZERO_CHILDS = 10;
+	private final Integer P_DAY = 15;
+	private final Integer P_ZERO_CHILDS = 12;
 	
 	public Evaluator(){
 		this.graph = new GraphScheuler();
@@ -46,7 +46,7 @@ public class Evaluator {
 	}
 	
 	
-	// checked
+
 	private void addAllVertexs(ArrayList<Exam> exams){
 		
 		for(int i = 0 ; i < exams.size(); i++){
@@ -55,7 +55,7 @@ public class Evaluator {
 		
 	}
 	
-	// checked
+
 	private void addAllNodes(ArrayList<VertexScheduler> vertexs){
 		
 		
@@ -70,12 +70,13 @@ public class Evaluator {
 				if(p.getFirst() > 0 || p.getSecond() > 0){
 					EdgeScheduler edge1 = new EdgeScheduler(vertexs.get(j), vertexs.get(i), p.getFirst(), p.getSecond()); 
 					
-					EdgeScheduler edge2 = new EdgeScheduler(vertexs.get(i), vertexs.get(j), p.getFirst(), p.getSecond()); 
 				
-					vertexs.get(i).addAdjs(edge1);
-					vertexs.get(j).addAdjs(edge2);
+					int id = this.graph.addEdge(edge1);
 					
-					this.graph.addEdge(edge1);
+					vertexs.get(i).addAdjs(id);
+					vertexs.get(j).addAdjs(id);
+					
+					
 				}
 			}
 		}
@@ -122,7 +123,7 @@ public class Evaluator {
 	}
 	
 	
-	// not tested yet
+
 	public double calculateFitness(Individual ind, Problem problem){
 		
 		
@@ -151,38 +152,37 @@ public class Evaluator {
 			
 			if(childs > 0){
 				
-				int edgeID = 0;
-				int diffDay = 0;
+				int edgeID = -1;
+				int diffDay = 365;
 				
 				for(int k = 0 ; k < childs ; k++){
-					VertexScheduler v = node.getAdjs().get(k).getTarget();
+					int index = node.getAdjs().get(k);
 
+					VertexScheduler v = this.graph.getEdge(index).getOtherVertex(node);
+					
 					System.out.println("son ...");
 					System.out.println(v.toString());
-					
-					if(!v.getColored()){
-						int tempDiff = Math.abs(v.getDay() - node.getDay()); 
 						
-						if(tempDiff > diffDay){
-							edgeID = k;
-							diffDay = tempDiff;
-						}
+					int tempDiff = v.getDay() - node.getDay();
+		
+					if(tempDiff < diffDay && tempDiff >  0){
+						edgeID = index;
+						diffDay = tempDiff;
 					}
+				
 				}
 				
 				System.out.println("diff_day = " + diffDay); 
-				
-				fitness += diffDay * P_DAY;
-				
 				System.out.println("k = " + edgeID);
+
 				
-				
-				fitness += node.getAdjs().get(edgeID).getDiff_year() * P_DIFF_YEAR;
-				fitness += node.getAdjs().get(edgeID).getSame_year() * P_SAME_YEAR;
-				
-				
-		
-				
+				// revision on how to calc fitness.....
+				if(edgeID != -1){
+					fitness += diffDay * P_DAY;	
+					
+					fitness += this.graph.getEdge(edgeID).getDiff_year() * P_DIFF_YEAR;
+					fitness += this.graph.getEdge(edgeID).getSame_year() * P_SAME_YEAR;
+				}
 				
 				this.graph.getNodes().get(j).setColored(true);
 			

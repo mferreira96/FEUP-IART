@@ -7,6 +7,9 @@ import utils.Utils;
 
 public class GeneticAlgorithm {
 	
+	// TODO - see the correct parameters...
+	
+	
 	private final int MAX_ITERATIONS;	
 	private final double MUTATION_RATE;
 	private final double CROSSOVER_RATE;
@@ -107,6 +110,9 @@ public class GeneticAlgorithm {
 			}
 		}
 	}
+	
+	
+	// TODO - rever possivelmente dividir o  numero crossover para metade....
 	
 	public void crossoverPopulation(){
 		Population population = this.getPopulation();

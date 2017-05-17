@@ -8,18 +8,18 @@ import logic.Exam;
 public class VertexScheduler {
 
 	private int day;
-	private ArrayList<EdgeScheduler> adjs;
+	private ArrayList<Integer> adjs;
 	private Exam exam;
 	private Boolean colored;
 	
 	public VertexScheduler(Exam exam, int day){
 		this.exam =	exam;
 		this.day = day;
-		this.adjs = new ArrayList<EdgeScheduler>();
+		this.adjs = new ArrayList<Integer>();
 		this.colored = false;
 	}
 	
-	public ArrayList<EdgeScheduler> getAdjs() {
+	public ArrayList<Integer> getAdjs() {
 		return adjs;
 	}
 	
@@ -39,8 +39,8 @@ public class VertexScheduler {
 		return exam;
 	}
 	
-	public void addAdjs(EdgeScheduler edge){
-		this.adjs.add(edge);
+	public void addAdjs(Integer newID){
+		this.adjs.add(newID);
 	}
 
 	public Boolean getColored() {
