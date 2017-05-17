@@ -10,6 +10,9 @@ import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
+
+import algorithm.Solver;
+
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.JButton;
@@ -73,27 +76,12 @@ public class Launcher {
 		properties.put("text.year", "Year");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, properties);
 		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
+		datePicker.getJFormattedTextField().setBackground(new Color(255, 255, 255));
 		datePicker.setBounds(328, 30, 154, 30);
 		 
-		frame.getContentPane().add(datePicker);
+		frame.getContentPane().add(datePicker);	
 		
 		
-		//Two arrays used for the table data
-        String[] columnNames = {"Exam", "Date"};
-        
-        Object[][] data = {
-        		{"Português", 1},
-        		{"Matemática", 2},
-        		{"Química", 3},
-        		{"Biologia", 5},
-        		{"Física", 6},
-        		{"Inglês", 7}        		
-        };
-		
-		
-		
-		table = new JTable(data, columnNames);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
 		JComboBox<String> algorithmSelect = new JComboBox<String>();
 		algorithmSelect.setBounds(328, 167, 144, 20);
@@ -111,11 +99,30 @@ public class Launcher {
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				Solver solver = new Solver();					
+				solver.geneticAlgorithm();
+				
+				//Two arrays used for the table data
+		        String[] columnNames = {"Exam", "Date"};
+		        
+		        Object[][] data = {
+		        		{"Português", "1/06/17"},
+		        		{"Matemática", "2/06/17"},
+		        		{"Química", "3/06/17"},
+		        		{"Biologia", "5/06/17"},
+		        		{"Física", "6/06/17"},
+		        		{"Inglês", "7/06/17"}        		
+		        };
+
+				table = new JTable(data, columnNames);
+				table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				
+				
 				JScrollPane tableScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 				table.setRowHeight(30);
 				table.setShowGrid(false);
-				tableScrollPane.setSize(170, 200);				
-				frame.getContentPane().add(tableScrollPane);
+				tableScrollPane.setSize(170, 200);
+				frame.getContentPane().add(tableScrollPane);				
 				frame.revalidate();
 				frame.repaint();
 			}

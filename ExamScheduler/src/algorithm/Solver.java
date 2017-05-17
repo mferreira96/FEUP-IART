@@ -10,6 +10,7 @@ import logic.Student;
 import utils.Utils;
 
 public class Solver {
+	Problem problem;
 
 	public void geneticAlgorithm(){
 				
@@ -37,7 +38,7 @@ public class Solver {
 		e3.addStudent(s1); e3.addStudent(s3); 
 		e4.addStudent(s1); e4.addStudent(s3);
 		
-		Problem problem = new Problem(days);
+		problem = new Problem(days);
 		
 		problem.addExame(e1);
 		problem.addExame(e2);
@@ -279,7 +280,7 @@ public class Solver {
 		s8.addExam(e8);
 		
 		
-		Problem problem = new Problem(endDay);
+		problem = new Problem(endDay);
 		
 		problem.addStudent(s1);
 		problem.addStudent(s2);
@@ -380,5 +381,9 @@ public class Solver {
 			int date = Utils.byteToInt(aux.get(i));
 			problem.getExame(i).setDate(date);
 		}
+	}
+	
+	public Problem getProblem(){
+		return problem;
 	}
 }
