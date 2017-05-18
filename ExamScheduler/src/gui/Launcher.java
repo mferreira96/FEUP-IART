@@ -12,6 +12,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import algorithm.Solver;
+import logic.Student;
 
 import java.awt.Color;
 import javax.swing.JTable;
@@ -25,6 +26,10 @@ import javax.swing.BorderFactory;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JPanel;
+import java.awt.Component;
+import javax.swing.JLabel;
+import java.awt.BorderLayout;
 
 public class Launcher {
 
@@ -59,9 +64,9 @@ public class Launcher {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setTitle("Exame Scheduler");
+		frame.setTitle("Exam Scheduler");
 		frame.setResizable(false);
-		frame.setBounds(100, 100, 900, 600);
+		frame.setBounds(100, 100, 740, 475);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
 		/* Makes the window appears at a centered position on the screen */
@@ -84,7 +89,7 @@ public class Launcher {
 		
 		
 		JComboBox<String> algorithmSelect = new JComboBox<String>();
-		algorithmSelect.setBounds(328, 167, 144, 20);
+		algorithmSelect.setBounds(524, 168, 144, 20);
 		algorithmSelect.addItem("Genetic Algorithm");
 		algorithmSelect.addItem("Simulated Annealing");
 		frame.getContentPane().add(algorithmSelect);		
@@ -95,6 +100,28 @@ public class Launcher {
 		btnStart.setBounds(326, 117, 89, 23);
 		frame.getContentPane().add(btnStart);
 		
+		JPanel panelExams = new JPanel();
+		panelExams.setBackground(new Color(255, 255, 255));
+		panelExams.setBounds(6, 6, 168, 153);
+		frame.getContentPane().add(panelExams);
+		panelExams.setLayout(new BorderLayout(0, 0));
+		
+		
+		JScrollPane tableScrollPane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		tableScrollPane.setBackground(new Color(255, 255, 255));
+		
+		
+		//tableScrollPane.setSize(170, 200);
+		panelExams.add(tableScrollPane);	
+		
+		JLabel lblSelectAlgorithm = new JLabel("Select algorithm:");
+		lblSelectAlgorithm.setBounds(390, 170, 124, 16);
+		frame.getContentPane().add(lblSelectAlgorithm);
+		
+		JPanel panelStudents = new JPanel();
+		panelStudents.setBounds(378, 286, 234, 92);
+		frame.getContentPane().add(panelStudents);
+		
 		
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -103,26 +130,39 @@ public class Launcher {
 				solver.geneticAlgorithm();
 				
 				//Two arrays used for the table data
-		        String[] columnNames = {"Exam", "Date"};
+		        String[] header = {"Exam", "Date"};
 		        
-		        Object[][] data = {
-		        		{"Português", "1/06/17"},
-		        		{"Matemática", "2/06/17"},
-		        		{"Química", "3/06/17"},
-		        		{"Biologia", "5/06/17"},
-		        		{"Física", "6/06/17"},
-		        		{"Inglês", "7/06/17"}        		
-		        };
+		        Object[][] result = new Object[solver.getProblem().getExames().size()][2];
+		        
+		        for (int i = 0; i < solver.getProblem().getExames().size(); i++){
+		        	result[i][0] = solver.getProblem().getExames().get(i).getName();
+		        	result[i][1] = solver.getProblem().getExames().get(i).getDate();
+		        }        
+		       
 
-				table = new JTable(data, columnNames);
+				table = new JTable(result, header);
 				table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-				
-				
+							
 				JScrollPane tableScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+							
 				table.setRowHeight(30);
 				table.setShowGrid(false);
 				tableScrollPane.setSize(170, 200);
-				frame.getContentPane().add(tableScrollPane);				
+				panelExams.removeAll();
+				panelExams.add(tableScrollPane);
+				
+				
+				
+				
+				JComboBox<String> studentSelect = new JComboBox<String>();
+				
+				for (int i = 0; i < solver.getProblem().getStudents().size(); i++){
+					studentSelect.addItem(solver.getProblem().getStudents().get(i).getName());
+				}
+				
+				panelStudents.removeAll();
+				panelStudents.add(studentSelect);
+				
 				frame.revalidate();
 				frame.repaint();
 			}

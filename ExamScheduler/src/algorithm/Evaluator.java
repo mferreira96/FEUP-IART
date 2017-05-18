@@ -39,7 +39,7 @@ public class Evaluator {
 	
 	// should not be ordered, this way the positions will match
 	public void createGraph(ArrayList<Exam> exams){
-		
+		this.graph = new GraphScheuler();
 		addAllVertexs(exams);
 		addAllNodes(this.graph.getNodes());
 

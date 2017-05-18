@@ -20,16 +20,15 @@ public class Utils {
 
 		return sum;	
 	}
-	
-	
-	public static ArrayList<Integer[]> splitChromossome(Integer[] bits, int days){
+		
+	public static ArrayList<Integer[]> splitChromossome(Integer[] bits, int numExams){
 	
 		ArrayList<Integer[]> exameDates = new ArrayList<Integer[]>();
 		
-		int size = bits.length/days;
+		int size = bits.length/numExams;
 		
 		
-		for (int i = 0; i < days; i++) {
+		for (int i = 0; i < numExams; i++) {
 		
 			Integer[] date = new Integer[size];
 			
