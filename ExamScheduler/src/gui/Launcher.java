@@ -12,26 +12,20 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import algorithm.Solver;
-import logic.Student;
 
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
 
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
-import java.awt.Component;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 
 public class Launcher {
+	private Solver solver;
 
 	private JFrame frame;
 	private JTable table;
@@ -56,6 +50,7 @@ public class Launcher {
 	 * Create the application.
 	 */
 	public Launcher() {
+		solver = new Solver();
 		initialize();
 	}
 
@@ -124,9 +119,8 @@ public class Launcher {
 		
 		
 		btnStart.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				Solver solver = new Solver();					
+			public void actionPerformed(ActionEvent e) {			
+									
 				solver.geneticAlgorithm();
 				
 				//Two arrays used for the table data

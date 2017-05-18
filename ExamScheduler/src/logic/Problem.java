@@ -12,6 +12,11 @@ public class Problem {
 	private int numberOfDays;
 	private int byteDays;
 	
+	public Problem(){
+		this.exams = new ArrayList<Exam>();
+		this.students = new ArrayList<Student>();
+	}
+	
 	public Problem(ArrayList<Exam> exams,int numberOfDays){		
 		this.exams = exams;
 		this.numberOfDays = numberOfDays;
@@ -23,6 +28,11 @@ public class Problem {
 		this.students = new ArrayList<Student>();
 		this.numberOfDays = numberOfDays;
 		this.byteDays = Utils.getNumberOfbitsNeeded(numberOfDays);		
+	}
+	
+	public void setNumberOfDays(int numberOfDays){
+		this.numberOfDays = numberOfDays;
+		this.byteDays = Utils.getNumberOfbitsNeeded(numberOfDays);
 	}
 	
 	public int getByteDays() {

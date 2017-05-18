@@ -3,7 +3,7 @@ package graph;
 import java.util.ArrayList;
 
 
-public class GraphScheuler {
+public class GraphScheduler {
 
 	
 	private ArrayList<VertexScheduler> nodes;
@@ -11,7 +11,7 @@ public class GraphScheuler {
 	private Integer edgeId;
 	
 	
-	public GraphScheuler() {
+	public GraphScheduler() {
 		
 		nodes = new ArrayList<VertexScheduler>();
 		edges = new ArrayList<EdgeScheduler>();

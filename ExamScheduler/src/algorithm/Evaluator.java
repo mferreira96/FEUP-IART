@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.jgrapht.alg.util.Pair;
 
 import graph.EdgeScheduler;
-import graph.GraphScheuler;
+import graph.GraphScheduler;
 import graph.VertexScheduler;
 import logic.Exam;
 import logic.Problem;
@@ -16,7 +16,7 @@ import utils.Utils;
 public class Evaluator {
 
 
-	private  GraphScheuler graph;
+	private  GraphScheduler graph;
 	
 	private static Evaluator evaluator = new Evaluator(); 
 	private final Integer P_SAME_YEAR = 12;
@@ -25,7 +25,7 @@ public class Evaluator {
 	private final Integer P_ZERO_CHILDS = 12;
 	
 	public Evaluator(){
-		this.graph = new GraphScheuler();
+		this.graph = new GraphScheduler();
 	}
 	
 	public static Evaluator getInstance(){
@@ -39,7 +39,7 @@ public class Evaluator {
 	
 	// should not be ordered, this way the positions will match
 	public void createGraph(ArrayList<Exam> exams){
-		this.graph = new GraphScheuler();
+		this.graph = new GraphScheduler();
 		addAllVertexs(exams);
 		addAllNodes(this.graph.getNodes());
 

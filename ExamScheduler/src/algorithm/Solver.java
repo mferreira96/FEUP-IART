@@ -11,40 +11,12 @@ import utils.Utils;
 
 public class Solver {
 	Problem problem;
-
-	public void geneticAlgorithm(){
-				
-		int iterations = 1;
-		int population_size = 10;
-		double mutation_rate = 0.6;
-		double crossover_rate = 0.7;
-		double elitism_count = 0.2;
-		int days = 32;
-		
-		
-		/// DADOS
-		
-		/*Exam e1 = new Exam(0,"LBAW",3);
-		Exam e2 = new Exam(1,"LTW",2);
-		Exam e3 = new Exam(2,"SDIS",3);
-		Exam e4 = new Exam(3,"PPIN",3);
-				
-		Student s1 = new Student(0, "joao", 3);
-		Student s2 = new Student(1, "maria", 3);
-		Student s3 = new Student(2, "jose", 3);
-		
-		e1.addStudent(s1); e1.addStudent(s3);
-		e2.addStudent(s2);
-		e3.addStudent(s1); e3.addStudent(s3); 
-		e4.addStudent(s1); e4.addStudent(s3);
-		
-		problem = new Problem(days);
-		
-		problem.addExame(e1);
-		problem.addExame(e2);
-		problem.addExame(e3);
-		problem.addExame(e4);*/
-		
+	
+	public Solver(){
+		initProblem();
+	}
+	
+	public void initProblem(){
 		Exam e1 = new Exam(0,"LBAW",3);
 		Exam e2 = new Exam(1,"LTW",2);
 		Exam e3 = new Exam(2,"SDIS",3);
@@ -227,7 +199,7 @@ public class Solver {
 		s8.addExam(e8);
 		
 		
-		problem = new Problem(days);
+		problem = new Problem();
 		
 		problem.addStudent(s1);
 		problem.addStudent(s2);
@@ -269,6 +241,41 @@ public class Solver {
 		problem.addExame(e6);
 		problem.addExame(e7);
 		problem.addExame(e8);
+	}
+
+	public void geneticAlgorithm(){
+				
+		int iterations = 1;
+		int population_size = 10;
+		double mutation_rate = 0.6;
+		double crossover_rate = 0.7;
+		double elitism_count = 0.2;
+		int days = 32;
+		
+		problem.setNumberOfDays(days);
+		
+		/// DADOS
+		
+		/*Exam e1 = new Exam(0,"LBAW",3);
+		Exam e2 = new Exam(1,"LTW",2);
+		Exam e3 = new Exam(2,"SDIS",3);
+		Exam e4 = new Exam(3,"PPIN",3);
+				
+		Student s1 = new Student(0, "joao", 3);
+		Student s2 = new Student(1, "maria", 3);
+		Student s3 = new Student(2, "jose", 3);
+		
+		e1.addStudent(s1); e1.addStudent(s3);
+		e2.addStudent(s2);
+		e3.addStudent(s1); e3.addStudent(s3); 
+		e4.addStudent(s1); e4.addStudent(s3);
+		
+		problem = new Problem(days);
+		
+		problem.addExame(e1);
+		problem.addExame(e2);
+		problem.addExame(e3);
+		problem.addExame(e4);*/	
 		
 		
 		Evaluator ev = Evaluator.getInstance();
