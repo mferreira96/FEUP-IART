@@ -1,117 +1,83 @@
 package algorithm;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import logic.Problem;
-import logic.Student;
 
 public class SimulatedAnnealing {
+	private Problem problem;
+	private final double TEMPERATURE;
+	private final double MINTEMPERATURE;
+	private final double COOLINGRATE;
+	private ArrayList<Integer> solution;
+	private Random random;
+
+	public SimulatedAnnealing(Problem problem, double minTemperature, double temperature, double coolingRate){
+		this.problem = problem;
+		this.MINTEMPERATURE = minTemperature;
+		this.TEMPERATURE = temperature;
+		this.COOLINGRATE = coolingRate;
+		
+		generateInitialState();
+		solve();		
+	}
+
+	public void generateInitialState(){
+		random = new Random();
+		solution = new ArrayList<>();		
+		
+		for (int i = 0; i < problem.getExams().size(); i++){
+			int examDay = random.nextInt(problem.getNumberOfDays())+1;
+			solution.add(examDay);
+		}		
+	}
 
 	public void solve(){
+		Evaluator evaluator = Evaluator.getInstance();
+		double currentTemperature = TEMPERATURE;
+		
+		/* Calculates the value of the initial solution */
+		double currentValue = evaluator.calculateFitness(solution, problem);
 
+		while(currentTemperature > MINTEMPERATURE){
+			int examToChange = random.nextInt(solution.size());
+			int oldExamDay = solution.get(examToChange);
+			//int newExamDay = random.nextInt(endDay-startingDay)+startingDay;
+			int newExamDay = random.nextInt(problem.getNumberOfDays())+1;
+			solution.set(examToChange, newExamDay);
+
+			double newValue = evaluator.calculateFitness(solution, problem);
+
+			System.out.println(currentValue);
+
+			double change = newValue - currentValue;
+			if ((change > 0) || (random.nextDouble() < Math.pow(Math.E, change / currentTemperature)))
+				currentValue = newValue;
+			else
+				solution.set(examToChange, oldExamDay);			
+
+			currentTemperature *= COOLINGRATE;			
+		}	
+	}	
+
+	public double getTEMPERATURE() {
+		return TEMPERATURE;
 	}
 
-	// TODO - IMPLEMENTAR
-	public void generateInitialState(){
-
+	public double getCOOLINGRATE() {
+		return COOLINGRATE;
 	}
 
-	// TODO - IMPLEMENTAR - gera novo estado da configuraçao
-	public void generateState(){
-
+	public double getMINTEMPERATURE() {
+		return MINTEMPERATURE;
 	}
 
-	// TODO - IMPLEMENATAR - atualiza temperatur consoante metoo escolhido
-	// multiplicativo ou subtrativo
-	public void coolingSchedule(){
-
+	public ArrayList<Integer> getSolution() {
+		return solution;
 	}
 
-	// TODO - IMPLEMENTAR
-	public static int objectiveFunction(Problem problem){		
-		int value = 0;
-
-		// TODO - CORRIGIR
-		value = value + calculateDaysBetweenExams(problem.getStudents())
-					  - calculateSameDayExams(problem.getStudents())
-					  - calculateConsecutiveExams(problem.getStudents());
-
-
-
-		return value;
-	}
-
-	// TODO - CORRIGR/REMOVER/MELHORAR
-	public static int calculateDaysBetweenExams(ArrayList<Student> students){
-		int sum = 0;
-
-		for (Student student: students){
-			for(int i = 0; i < student.getExams().size(); i++){
-				int w = student.getExams().get(i).getDate();
-				for(int j = i; j < student.getExams().size(); j++){
-					int z = student.getExams().get(j).getDate();
-					
-					// TODO -ALTERAR FATORES EM USO??
-					if(student.hasDisciplinesToDo())
-						sum += Math.abs(z-w);
-					else
-						sum += 2 * Math.abs(z-w);
-				}
-			}				
-		}
-
-		return sum;
-	}
-
-	// TODO - CORRIGIR/MELHORAR
-	public static int calculateSameDayExams(ArrayList<Student> students){
-		int sum = 0;
-
-		outerLoop:
-		for (Student student: students){
-			for(int i = 0; i < student.getExams().size(); i++){
-				int w = student.getExams().get(i).getDate();
-				for(int j = i; j < student.getExams().size(); j++){
-					int z = student.getExams().get(j).getDate();
-					if((z-w) == 0){
-						/* Verifies if 2 exams are from same year */
-						if(student.getExams().get(i).getYear() == student.getExams().get(j).getYear())
-							sum += 4;
-						else
-							sum += 3;
-						
-						break outerLoop;
-					}
-				}						
-			}				
-		}
-
-		return sum;
-	}
-
-	// TODO - CORRIGIR/MELHORAR
-	public static int calculateConsecutiveExams(ArrayList<Student> students){
-		int sum = 0;
-
-		outerLoop:
-		for (Student student: students){
-			for(int i = 0; i < student.getExams().size(); i++){
-				int w = student.getExams().get(i).getDate();
-				for(int j = i; j < student.getExams().size(); j++){
-					int z = student.getExams().get(j).getDate();
-					if(Math.abs(z-w) == 1){
-						/* Verifies if 2 exams are from same year */
-						if(student.getExams().get(i).getYear() == student.getExams().get(j).getYear())
-							sum += 4;
-						else
-							sum += 3;
-						
-						break outerLoop;
-					}						
-				}
-			}				
-		}
-
-		return sum;
+	public void setSolution(ArrayList<Integer> solution) {
+		this.solution = solution;
 	}
 }

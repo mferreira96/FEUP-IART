@@ -11,8 +11,6 @@ import logic.Exam;
 import logic.Problem;
 import logic.Student;
 
-import utils.Utils;
-
 public class Evaluator {
 
 
@@ -42,7 +40,6 @@ public class Evaluator {
 		this.graph = new GraphScheduler();
 		addAllVertexs(exams);
 		addAllNodes(this.graph.getNodes());
-
 	}
 	
 	
@@ -51,14 +48,10 @@ public class Evaluator {
 		
 		for(int i = 0 ; i < exams.size(); i++){
 			this.graph.addVertex(new VertexScheduler(exams.get(i), 0));
-		}
-		
+		}		
 	}
 	
-
-	private void addAllNodes(ArrayList<VertexScheduler> vertexs){
-		
-		
+	private void addAllNodes(ArrayList<VertexScheduler> vertexs){		
 		for(int i = 0 ; i < vertexs.size(); i++){
 			
 			for(int  j = i + 1 ; j < vertexs.size(); j++){
@@ -79,10 +72,8 @@ public class Evaluator {
 					
 				}
 			}
-		}
-		
+		}		
 	}
-
 	
 	private Pair<Integer,Integer> verifyExams(Exam e1, Exam e2){
 		
@@ -120,23 +111,12 @@ public class Evaluator {
 	private void updateUnColored() {
 		this.graph.updateUnColored();
 		
-	}
-	
-	
+	}	
 
-	public double calculateFitness(Individual ind, Problem problem){
+	public double calculateFitness(ArrayList<Integer> exam_days, Problem problem){			
+		double fitness = 0;			
 		
-		
-		double fitness = 0;
-		
-		ArrayList<Integer[]> exame_list = Utils.splitChromossome(ind.getChromossome(), problem.getNumberOfExames()); 
-		ArrayList<Integer> exame_days = new ArrayList<Integer>();
-			
-		for(int i = 0; i < exame_list.size(); i++){
-			exame_days.add(Utils.byteToInt(exame_list.get(i)));
-		}
-		
-		this.updateDays(exame_days);
+		this.updateDays(exam_days);
 		this.updateUnColored();
 		
 		System.out.println("............... HELLO ............");
@@ -192,15 +172,10 @@ public class Evaluator {
 				this.graph.getNodes().get(j).setColored(true);
 			}
 			
-		}
-		
-		
+		}		
 		
 		System.out.println("............... BYE ............");
-
 		
 		return fitness;		
 	}
-
-
 }

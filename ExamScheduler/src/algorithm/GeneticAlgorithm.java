@@ -92,7 +92,14 @@ public class GeneticAlgorithm {
 	public double calcFitness(Individual ind){		
 		Evaluator evaluator = Evaluator.getInstance();
 		
-		double fit = evaluator.calculateFitness(ind, this.problem);
+		ArrayList<Integer[]> exame_list = Utils.splitChromossome(ind.getChromossome(), problem.getNumberOfExames()); 
+		ArrayList<Integer> exam_days = new ArrayList<Integer>();
+			
+		for(int i = 0; i < exame_list.size(); i++){
+			exam_days.add(Utils.byteToInt(exame_list.get(i)));
+		}
+		
+		double fit = evaluator.calculateFitness(exam_days, this.problem);
 		ind.setFitness(fit);
 		
 		return fit;

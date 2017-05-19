@@ -7,7 +7,6 @@ import utils.Utils;
 public class Problem {
 
 	private ArrayList<Exam> exams;
-	// TODO - APAGAR??
 	private ArrayList<Student> students;
 	private int numberOfDays;
 	private int byteDays;
@@ -43,15 +42,15 @@ public class Problem {
 		return numberOfDays;
 	}
 	
-	public ArrayList<Exam> getExames() {
+	public ArrayList<Exam> getExams() {
 		return exams;
 	}
 	
-	public Exam getExame(int id){		
+	public Exam getExam(int id){		
 		return exams.get(id);
 	}	
 	
-	public void addExame(Exam exam){
+	public void addExam(Exam exam){
 		this.exams.add(exam);
 	}	
 	
@@ -67,15 +66,12 @@ public class Problem {
 		return students;
 	}	
 	
-	// TODO - MELHORAR CONVERSAO PARA STRING
 	@Override
 	public String toString(){
 		String result = "";
 		
 		for (int i = 0; i < exams.size(); i++)
-			result += exams.get(i).getDate()+" - ";
-			
-			
+			result += exams.get(i).getDate()+" - ";			
 		
 		return result;			
 	}
