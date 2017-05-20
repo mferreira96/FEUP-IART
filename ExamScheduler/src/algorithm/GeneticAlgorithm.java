@@ -126,7 +126,7 @@ public class GeneticAlgorithm {
 	}
 	
 	
-	// TODO - rever possivelmente dividir o  numero crossover para metade....
+	// TODO - verificar
 	
 	public void crossoverPopulation(){
 		Population population = this.getPopulation();
@@ -136,7 +136,7 @@ public class GeneticAlgorithm {
 		for(int i = 0 ; i < this.POPULATION_SIZE; i++){			
 			Individual p1 = population.getFittest(i);				
 			
-			if(this.CROSSOVER_RATE > Math.random()){				
+			if(this.CROSSOVER_RATE > Math.random() && i >= this.ELITISM_COUNT){				
 				Individual newInd = new Individual(this.chromossomeSize);				
 				Individual p2 = this.selectParent(population);				
 				int breakIndex = (int)Math.random() * this.chromossomeSize;	
