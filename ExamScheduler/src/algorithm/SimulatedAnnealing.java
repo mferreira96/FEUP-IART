@@ -6,18 +6,31 @@ import java.util.Random;
 import logic.Problem;
 
 public class SimulatedAnnealing {
+	
+	public enum TypeOfDecrease {MULTIPLICATIVE, SUBTRACTIVE};
+	
 	private Problem problem;
+	private final int MAXITERATIONS;
+	private final int NUMREPETITIONS;
 	private final double TEMPERATURE;
 	private final double MINTEMPERATURE;
 	private final double COOLINGRATE;
+	private final TypeOfDecrease TYPEOFDECREASE;
 	private ArrayList<Integer> solution;
 	private Random random;
+	
+	
 
-	public SimulatedAnnealing(Problem problem, double minTemperature, double temperature, double coolingRate){
+	public SimulatedAnnealing(Problem problem, int maxIterations, int numRepetitions, double temperature, double minTemperature, 
+			double coolingRate, TypeOfDecrease typeOfDecrease){
+		
 		this.problem = problem;
-		this.MINTEMPERATURE = minTemperature;
+		this.MAXITERATIONS = maxIterations;
+		this.NUMREPETITIONS = numRepetitions;
 		this.TEMPERATURE = temperature;
+		this.MINTEMPERATURE = minTemperature;
 		this.COOLINGRATE = coolingRate;
+		this.TYPEOFDECREASE = typeOfDecrease;
 		
 		generateInitialState();
 		solve();		

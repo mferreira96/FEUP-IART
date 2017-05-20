@@ -11,6 +11,7 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import algorithm.SimulatedAnnealing;
 import algorithm.Solver;
 
 import java.awt.Color;
@@ -24,19 +25,34 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import javax.swing.JTextField;
-import javax.swing.JEditorPane;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JCheckBoxMenuItem;
 
 public class Launcher {
 	private Solver solver;
+	
+	/* Genetic Algorithm variables */
+	int iterationsGA;
+	int populationSizeGA;
+	double mutationRateGA;
+	double crossoverRateGA;
+	double elitismCountGA;
+	
+	/* Simulated Annealing variables */
+	private int maxIterationsSA;
+	private int numRepetitionsSA;
+	private double initialTemperatureSA;
+	private double minimumTemperatureSA;
+	private double coolingRateSA;	
+	private SimulatedAnnealing.TypeOfDecrease typeOfDecreaseSA;
 
 	private JFrame frame;
 	private JTable tableExams;
 	private JTable tableStudents;
 	private JTextField textField;
+	private PreferencesGeneticAlgorithm prefGA;
+	private PreferencesSimulatedAnnealing prefSA;
 
 	/**
 	 * Launch the application.
@@ -58,6 +74,21 @@ public class Launcher {
 	 * Create the application.
 	 */
 	public Launcher() {
+		/* Genetic Algorithm initialization */
+		iterationsGA = 1;
+		populationSizeGA = 10;
+		mutationRateGA = 0.6;
+		crossoverRateGA = 0.7;
+		elitismCountGA = 0.2;
+		
+		/* Simulated Annealing initialization */
+		maxIterationsSA = 500;
+		numRepetitionsSA = 10;
+		initialTemperatureSA = 20;
+		minimumTemperatureSA = 0.001;
+		coolingRateSA = 0.95;
+		
+		typeOfDecreaseSA = SimulatedAnnealing.TypeOfDecrease.MULTIPLICATIVE;
 		solver = new Solver();
 		initialize();
 	}
@@ -148,7 +179,7 @@ public class Launcher {
 
 
 
-		/* Input for number of says */
+		/* Input for number of days */
 		textField = new JTextField();
 		textField.setText("32");
 		textField.setBounds(513, 119, 122, 28);
@@ -174,80 +205,48 @@ public class Launcher {
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 
-		JMenu mnRun = new JMenu("Run");
-		menuBar.add(mnRun);
+		JMenu menuRun = new JMenu("Run");
+		menuBar.add(menuRun);
 
-		JMenuItem mntmGeneticAlgorithm = new JMenuItem("Genetic Algorithm");
-		mnRun.add(mntmGeneticAlgorithm);
+		JMenuItem runGeneticAlgorithm = new JMenuItem("Genetic Algorithm");
+		menuRun.add(runGeneticAlgorithm);
 
-		JMenuItem mntmSimulatedAnnealing = new JMenuItem("Simulated Annealing");
-		mnRun.add(mntmSimulatedAnnealing);
+		JMenuItem runSimulatedAnnealing = new JMenuItem("Simulated Annealing");
+		menuRun.add(runSimulatedAnnealing);
 
-		JMenu mnNewMenu = new JMenu("Students");
-		menuBar.add(mnNewMenu);
+		JMenu menuStudents = new JMenu("Students");
+		menuBar.add(menuStudents);
 
-		JMenuItem mntmAddStudent = new JMenuItem("Add");
-		mnNewMenu.add(mntmAddStudent);
+		JMenuItem menuAddStudent = new JMenuItem("Add");
+		menuStudents.add(menuAddStudent);
 
-		JMenuItem mntmEdit = new JMenuItem("Edit");
-		mnNewMenu.add(mntmEdit);
+		JMenuItem menuEdit = new JMenuItem("Edit");
+		menuStudents.add(menuEdit);
 
-		JMenuItem mntmDelete = new JMenuItem("Delete");
-		mnNewMenu.add(mntmDelete);
+		JMenuItem menuDelete = new JMenuItem("Delete");
+		menuStudents.add(menuDelete);
 
-		JMenu mnNewMenu_1 = new JMenu("Preferences");
-		menuBar.add(mnNewMenu_1);
+		JMenu menuPreferences = new JMenu("Preferences");
+		menuBar.add(menuPreferences);
 
-		JMenuItem mntmGeneticAlgorithm_1 = new JMenuItem("Genetic Algorithm");
-		mnNewMenu_1.add(mntmGeneticAlgorithm_1);
+		JMenuItem preferencesGeneticAlgorithm = new JMenuItem("Genetic Algorithm");
+		menuPreferences.add(preferencesGeneticAlgorithm);
 
-		JMenuItem mntmSimulatedAnnealing_1 = new JMenuItem("Simulated Annealing");
-		mnNewMenu_1.add(mntmSimulatedAnnealing_1);
+		JMenuItem preferencesSimulatedAnnealing = new JMenuItem("Simulated Annealing");
+		menuPreferences.add(preferencesSimulatedAnnealing);	
+		
+		prefGA = new PreferencesGeneticAlgorithm(iterationsGA, populationSizeGA, mutationRateGA,
+				crossoverRateGA, elitismCountGA);
+		
+		prefSA = new PreferencesSimulatedAnnealing(maxIterationsSA, numRepetitionsSA,
+				initialTemperatureSA, minimumTemperatureSA, coolingRateSA, typeOfDecreaseSA);
 
-		/* Start button listener */
-		btnStart.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {	
-
-				//TODO  Corrigir valores de entrada do algoritmo
-				if(String.valueOf(algorithmSelect.getSelectedItem()).equals("Genetic Algorithm"))
-					solver.geneticAlgorithm(Integer.parseInt(textField.getText()));
-				else
-					solver.simulatedAnnealing(Integer.parseInt(textField.getText()), 0.5, 20000, 0.95);
-
-
-
-
-				//Two arrays used for the table data
-				String[] headerExams = {"Exam", "Date"};
-
-				Object[][] bodyExams = new Object[solver.getProblem().getExams().size()][2];
-
-				for (int i = 0; i < solver.getProblem().getExams().size(); i++){
-					bodyExams[i][0] = solver.getProblem().getExams().get(i).getName();
-					bodyExams[i][1] = solver.getProblem().getExams().get(i).getDate();
-				}     		       
-
-				tableExams = new JTable(bodyExams, headerExams);
-				tableExams.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-				JScrollPane tableScrollPaneExams = new JScrollPane(tableExams, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
-				tableExams.setRowHeight(30);
-				tableExams.setShowGrid(false);
-				tableScrollPaneExams.setSize(170, 200);
-				panelExams.removeAll();
-				panelExams.add(tableScrollPaneExams);
-
-
-				frame.revalidate();
-				frame.repaint();
-			}
-		});
-
-		mntmGeneticAlgorithm.addActionListener(new ActionListener() {			
+		/* Menu run Genetic ALgorithm */
+		runGeneticAlgorithm.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				solver.geneticAlgorithm(Integer.parseInt(textField.getText()));
+				solver.geneticAlgorithm(Integer.parseInt(textField.getText()), prefGA.getIterations(), prefGA.getPopulationSize(), 
+						prefGA.getMutationRate(), prefGA.getCrossoverRate(), prefGA.getElitismCount());
 
 				//Two arrays used for the table data
 				String[] headerExams = {"Exam", "Date"};
@@ -275,10 +274,12 @@ public class Launcher {
 			}
 		});
 		
-		mntmSimulatedAnnealing.addActionListener(new ActionListener() {			
+		/* Menu run Simulated Annealing */
+		runSimulatedAnnealing.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				solver.simulatedAnnealing(Integer.parseInt(textField.getText()), 0.5, 20000, 0.95);
+				solver.simulatedAnnealing(Integer.parseInt(textField.getText()), prefSA.getMaxIterations(), prefSA.getNumRepetions(), 
+						prefSA.getInitialTemperature(), prefSA.getMinimumTemperature(), prefSA.getCoolingRate(), prefSA.getTypeOfDecrease());
 
 				//Two arrays used for the table data
 				String[] headerExams = {"Exam", "Date"};
@@ -303,6 +304,61 @@ public class Launcher {
 
 				frame.revalidate();
 				frame.repaint();				
+			}
+		});
+		
+		preferencesGeneticAlgorithm.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				prefGA.setLocationRelativeTo(frame);
+				prefGA.setVisible(true);				
+			}
+		});
+		
+		preferencesSimulatedAnnealing.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {				
+				prefSA.setLocationRelativeTo(frame);
+				prefSA.setVisible(true);				
+			}
+		});
+		
+		/* Start button listener */
+		btnStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {	
+
+				//TODO  Corrigir valores de entrada do algoritmo
+				if(String.valueOf(algorithmSelect.getSelectedItem()).equals("Genetic Algorithm"))
+					solver.geneticAlgorithm(Integer.parseInt(textField.getText()), prefGA.getIterations(), prefGA.getPopulationSize(), 
+							prefGA.getMutationRate(), prefGA.getCrossoverRate(), prefGA.getElitismCount());
+				else
+					solver.simulatedAnnealing(Integer.parseInt(textField.getText()), prefSA.getMaxIterations(), prefSA.getNumRepetions(), 
+							prefSA.getInitialTemperature(), prefSA.getMinimumTemperature(), prefSA.getCoolingRate(), prefSA.getTypeOfDecrease());
+
+				//Two arrays used for the table data
+				String[] headerExams = {"Exam", "Date"};
+
+				Object[][] bodyExams = new Object[solver.getProblem().getExams().size()][2];
+
+				for (int i = 0; i < solver.getProblem().getExams().size(); i++){
+					bodyExams[i][0] = solver.getProblem().getExams().get(i).getName();
+					bodyExams[i][1] = solver.getProblem().getExams().get(i).getDate();
+				}     		       
+
+				tableExams = new JTable(bodyExams, headerExams);
+				tableExams.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+				JScrollPane tableScrollPaneExams = new JScrollPane(tableExams, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+				tableExams.setRowHeight(30);
+				tableExams.setShowGrid(false);
+				tableScrollPaneExams.setSize(170, 200);
+				panelExams.removeAll();
+				panelExams.add(tableScrollPaneExams);
+
+
+				frame.revalidate();
+				frame.repaint();
 			}
 		});
 

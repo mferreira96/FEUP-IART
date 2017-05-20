@@ -237,13 +237,8 @@ public class Solver {
 		problem.addExam(e8);
 	}
 
-	public void geneticAlgorithm(int days){
-				
-		int iterations = 1;
-		int population_size = 10;
-		double mutation_rate = 0.6;
-		double crossover_rate = 0.7;
-		double elitism_count = 0.2;
+	public void geneticAlgorithm(int days, int iterations, int populationSize, double mutationRate,
+			double crossoverRate, double elitismCount){		
 		
 		problem.setNumberOfDays(days);
 				
@@ -255,7 +250,7 @@ public class Solver {
 		// -----------------------
 
 		
-		GeneticAlgorithm ga = new GeneticAlgorithm(iterations, population_size, mutation_rate, crossover_rate, elitism_count, problem);
+		GeneticAlgorithm ga = new GeneticAlgorithm(iterations, populationSize, mutationRate, crossoverRate, elitismCount, problem);
 		
 		ga.evalPopulation();
 		
@@ -292,14 +287,16 @@ public class Solver {
 		System.out.println("Final");
 		System.out.println("Fitness ....... "  + bestIndividual.getFitness());
 	}	
-	
-	public void simulatedAnnealing(int days, double minTemperature, double temperature, double coolingRate){
+			
+	public void simulatedAnnealing(int days, int maxIterations, int numRepetitions, double temperature, double minTemperature, 
+			double coolingRate, SimulatedAnnealing.TypeOfDecrease typeOfDecrease){
 		problem.setNumberOfDays(days);				
 		
 		Evaluator evaluator = Evaluator.getInstance();		
 		evaluator.createGraph(problem.getExams());		
 	
-		SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(problem, minTemperature, temperature, coolingRate);
+		SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(problem, maxIterations, numRepetitions, temperature, minTemperature, 
+				coolingRate, typeOfDecrease);
 		simulatedAnnealing.solve();	
 		
 		for(int i = 0 ; i < problem.getNumberOfExames(); i++){
