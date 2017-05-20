@@ -258,15 +258,15 @@ public class Solver {
 			
 			Individual ind = ga.getPopulation().getFittest(0);
 			
-			System.out.println("Fitness ....... "  + ind.getFitness());
+			//System.out.println("Fitness ....... "  + ind.getFitness());
 			
 			ga.crossoverPopulation();
 			
-			System.out.println(ga.getPopulation().toString());
+			//System.out.println(ga.getPopulation().toString());
 			
 			ga.mutatePopulation();
 			
-			System.out.println(ga.getPopulation().toString());
+			//System.out.println(ga.getPopulation().toString());
 			
 			ga.evalPopulation();
 			

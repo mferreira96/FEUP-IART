@@ -17,10 +17,11 @@ public class Evaluator {
 	private  GraphScheduler graph;
 	
 	private static Evaluator evaluator = new Evaluator(); 
-	private final Integer P_SAME_YEAR = 12;
-	private final Integer P_DIFF_YEAR = 3;
-	private final Integer P_DAY = 15;
-	private final Integer P_ZERO_CHILDS = 12;
+	private final Integer P_SAME_YEAR = 50;
+	private final Integer P_DIFF_YEAR = 30;
+	private final Integer P_DAY = 300;
+	private final Integer P_ZERO_CHILDS = 100;
+	private final Integer P_SAME_DAY = -500;
 	
 	public Evaluator(){
 		this.graph = new GraphScheduler();
@@ -145,7 +146,7 @@ public class Evaluator {
 						
 					int tempDiff = v.getDay() - node.getDay();
 		
-					if(tempDiff < diffDay && tempDiff >  0){
+					if(tempDiff < diffDay && tempDiff >=  0){
 						edgeID = index;
 						diffDay = tempDiff;
 					}
@@ -156,8 +157,11 @@ public class Evaluator {
 				System.out.println("k = " + edgeID);
 
 				
-				// revision on how to calc fitness.....
 				if(edgeID != -1){
+					if(diffDay == 0){
+						fitness += P_SAME_DAY * node.getExam().getStudents().size();
+					}
+					
 					fitness += diffDay * P_DAY;	
 					
 					fitness += this.graph.getEdge(edgeID).getDiff_year() * P_DIFF_YEAR;
