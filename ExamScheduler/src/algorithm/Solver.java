@@ -61,7 +61,7 @@ public class Solver {
 		s2.addExam(e1);
 		e1.addStudent(s3);
 		s3.addExam(e1);
-		e1.addStudent(s4);
+		/*e1.addStudent(s4);
 		s4.addExam(e1);
 		e1.addStudent(s5);
 		s5.addExam(e1);
@@ -72,14 +72,14 @@ public class Solver {
 		e1.addStudent(s8);
 		s8.addExam(e1);
 		e1.addStudent(s9);
-		s9.addExam(e1);
+		s9.addExam(e1);*/
 		e2.addStudent(s11);
 		s11.addExam(e2);
 		e2.addStudent(s2);
 		s2.addExam(e2);
 		e2.addStudent(s30);
 		s30.addExam(e2);
-		e2.addStudent(s4);
+		/*e2.addStudent(s4);
 		s4.addExam(e2);
 		e2.addStudent(s5);
 		s5.addExam(e2);
@@ -90,12 +90,12 @@ public class Solver {
 		e2.addStudent(s28);
 		s28.addExam(e2);
 		e2.addStudent(s23);
-		s23.addExam(e2);
+		s23.addExam(e2);*/
 		e3.addStudent(s1);
 		s1.addExam(e3);
 		e3.addStudent(s2);
 		s2.addExam(e3);
-		e3.addStudent(s3);
+		/*e3.addStudent(s3);
 		s3.addExam(e3);
 		e3.addStudent(s4);
 		s4.addExam(e3);
@@ -122,7 +122,7 @@ public class Solver {
 		e3.addStudent(s26);
 		s26.addExam(e3);
 		e3.addStudent(s3);
-		s3.addExam(e3);
+		s3.addExam(e3);*/
 		e4.addStudent(s1);
 		s1.addExam(e4);
 		e4.addStudent(s2);
@@ -131,7 +131,7 @@ public class Solver {
 		s3.addExam(e4);
 		e4.addStudent(s5);
 		s5.addExam(e4);
-		e4.addStudent(s6);
+		/*e4.addStudent(s6);
 		s6.addExam(e4);
 		e4.addStudent(s9);
 		s9.addExam(e4);
@@ -140,7 +140,7 @@ public class Solver {
 		e4.addStudent(s12);
 		s12.addExam(e4);
 		e4.addStudent(s13);
-		s13.addExam(e4);
+		s13.addExam(e4);*/
 		e5.addStudent(s1);
 		s1.addExam(e5);
 		e5.addStudent(s4);
@@ -205,7 +205,7 @@ public class Solver {
 		problem.addStudent(s7);
 		problem.addStudent(s8);
 		problem.addStudent(s9);
-		problem.addStudent(s10);
+	/*	problem.addStudent(s10);
 		problem.addStudent(s11);
 		problem.addStudent(s12);
 		problem.addStudent(s13);
@@ -225,38 +225,36 @@ public class Solver {
 		problem.addStudent(s27);
 		problem.addStudent(s28);
 		problem.addStudent(s29);
-		problem.addStudent(s30);
+		problem.addStudent(s30);*/
 		
 		problem.addExam(e1);
 		problem.addExam(e2);
 		problem.addExam(e3);
 		problem.addExam(e4);
-		problem.addExam(e5);
+	/*	problem.addExam(e5);
 		problem.addExam(e6);
 		problem.addExam(e7);
-		problem.addExam(e8);
+		problem.addExam(e8);*/
 	}
 
 	public void geneticAlgorithm(int days, int iterations, int populationSize, double mutationRate,
-			double crossoverRate, double elitismCount){		
+			double crossoverRate, int elitismCount){		
 		
 		problem.setNumberOfDays(days);
 				
-		
 		Evaluator evaluator = Evaluator.getInstance();
 		
-		evaluator.createGraph(problem.getExams());
+		long initialTime = System.currentTimeMillis();
 		
-		// -----------------------
-
-		
+		evaluator.createGraph(problem.getExams());		
+				
 		GeneticAlgorithm ga = new GeneticAlgorithm(iterations, populationSize, mutationRate, crossoverRate, elitismCount, problem);
 		
 		ga.evalPopulation();
 		
 		while(!ga.isTerminated()){
 			
-			Individual ind = ga.getPopulation().getFittest(0);
+			//Individual ind = ga.getPopulation().getFittest(0);
 			
 			//System.out.println("Fitness ....... "  + ind.getFitness());
 			
@@ -278,11 +276,18 @@ public class Solver {
 				
 		updateExameDate(problem, bestIndividual);	
 		
-		System.out.println("------------------------ PROBLEM ----------------------------");
+		long endTime = System.currentTimeMillis();
+	
+		long duration = (endTime - initialTime); // miliseconds
 		
+		problem.setDuration(duration);
+		System.out.println("------------------------ PROBLEM ----------------------------");
+		/*
 		for(int  j = 0 ; j < problem.getNumberOfExames(); j++){
 			System.out.println(problem.getExam(j).toString());
-		}
+		}*/
+		
+		System.out.println(problem.toString());
 		
 		System.out.println("Final");
 		System.out.println("Fitness ....... "  + bestIndividual.getFitness());
@@ -293,6 +298,9 @@ public class Solver {
 		problem.setNumberOfDays(days);				
 		
 		Evaluator evaluator = Evaluator.getInstance();		
+		
+		long initialTime = System.currentTimeMillis();
+		
 		evaluator.createGraph(problem.getExams());		
 	
 		SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(problem, maxIterations, numRepetitions, temperature, minTemperature, 
@@ -304,6 +312,12 @@ public class Solver {
 			int date = simulatedAnnealing.getSolution().get(i);
 			problem.getExam(i).setDate(date);
 		}
+
+		long endTime = System.currentTimeMillis();
+		
+		long duration = (endTime - initialTime); // miliseconds
+		
+		problem.setDuration(duration);
 		
 		System.out.println(problem);
 	}

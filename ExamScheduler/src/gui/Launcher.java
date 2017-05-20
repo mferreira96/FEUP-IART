@@ -37,7 +37,7 @@ public class Launcher {
 	int populationSizeGA;
 	double mutationRateGA;
 	double crossoverRateGA;
-	double elitismCountGA;
+	int elitismCountGA;
 	
 	/* Simulated Annealing variables */
 	private int maxIterationsSA;
@@ -75,11 +75,11 @@ public class Launcher {
 	 */
 	public Launcher() {
 		/* Genetic Algorithm initialization */
-		iterationsGA = 1;
-		populationSizeGA = 10;
-		mutationRateGA = 0.6;
+		iterationsGA = 200;
+		populationSizeGA = 150;
+		mutationRateGA = 0.02;
 		crossoverRateGA = 0.7;
-		elitismCountGA = 0.2;
+		elitismCountGA = 1;
 		
 		/* Simulated Annealing initialization */
 		maxIterationsSA = 500;

@@ -7,13 +7,12 @@ import utils.Utils;
 
 public class GeneticAlgorithm {
 	
-	// TODO - see the correct parameters...
-	
+
 	
 	private final int MAX_ITERATIONS;	
 	private final double MUTATION_RATE;
 	private final double CROSSOVER_RATE;
-	private final double ELITISM_COUNT;
+	private final int ELITISM_COUNT;
 	private final int POPULATION_SIZE;
 	private Population population;
 	private Problem problem;
@@ -21,7 +20,7 @@ public class GeneticAlgorithm {
 	private int numberOfIteration;
 
 	
-	public GeneticAlgorithm(int iterations,int population_size, double mutation_rate, double crossover_rate, double elitism_count, Problem problem){
+	public GeneticAlgorithm(int iterations,int population_size, double mutation_rate, double crossover_rate, int elitism_count, Problem problem){
 		this.MAX_ITERATIONS = iterations;
 		this.MUTATION_RATE = mutation_rate;
 		this.CROSSOVER_RATE = crossover_rate;
@@ -58,7 +57,7 @@ public class GeneticAlgorithm {
 		return MUTATION_RATE;
 	}
 	
-	public double getELITISM_COUNT() {
+	public int getELITISM_COUNT() {
 		return ELITISM_COUNT;
 	}
 	
@@ -106,16 +105,24 @@ public class GeneticAlgorithm {
 	}
 	
 	public void mutatePopulation() {
+		
 		Population population = this.getPopulation();
 		
-		int totalBits = (int) ((population.getPopulationSize() - this.getELITISM_COUNT()) * this.chromossomeSize);
-	
-		for (int i = 0; i < totalBits; i++) {
-			double f = Math.random();
-			if (f < this.getMUTATION_RATE()) {
-				population.getIndividuals().get(i / this.chromossomeSize).mutation(i % this.chromossomeSize);
+		
+		for(int j = 0; j < population.getPopulationSize(); j++){
+		
+			Individual ind = population.getFittest(j);
+			
+			if(j >= this.ELITISM_COUNT){
+				
+				if(this.MUTATION_RATE > Math.random()){
+					int newGenePos = (int) (Math.random() * ind.getChromossome().length);
+					population.getIndividuals().get(j).mutation(newGenePos);
+				}
 			}
+			
 		}
+		
 	}
 	
 	

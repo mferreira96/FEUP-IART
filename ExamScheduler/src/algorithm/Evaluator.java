@@ -18,7 +18,7 @@ public class Evaluator {
 	
 	private static Evaluator evaluator = new Evaluator(); 
 	private final Integer P_SAME_YEAR = 50;
-	private final Integer P_DIFF_YEAR = 30;
+	private final Integer P_DIFF_YEAR = 20;
 	private final Integer P_DAY = 300;
 	private final Integer P_ZERO_CHILDS = 100;
 	private final Integer P_SAME_DAY = -500;
@@ -120,7 +120,7 @@ public class Evaluator {
 		this.updateDays(exam_days);
 		this.updateUnColored();
 		
-		System.out.println("............... HELLO ............");
+		///System.out.println("............... HELLO ............");
 
 		
 		for(int j = 0 ; j < this.graph.getNodes().size(); j++){
@@ -128,8 +128,8 @@ public class Evaluator {
 			VertexScheduler node = this.graph.getNodes().get(j);
 			int childs = node.numberOfConnections();  
 			
-			System.out.println("taking care of");
-			System.out.println(node.toString());
+			//System.out.println("taking care of");
+			//System.out.println(node.toString());
 			
 			if(childs > 0){
 				
@@ -141,8 +141,8 @@ public class Evaluator {
 
 					VertexScheduler v = this.graph.getEdge(index).getOtherVertex(node);
 					
-					System.out.println("son ...");
-					System.out.println(v.toString());
+					//System.out.println("son ...");
+					//System.out.println(v.toString());
 						
 					int tempDiff = v.getDay() - node.getDay();
 		
@@ -153,8 +153,8 @@ public class Evaluator {
 				
 				}
 				
-				System.out.println("diff_day = " + diffDay); 
-				System.out.println("k = " + edgeID);
+			//	System.out.println("diff_day = " + diffDay); 
+				//System.out.println("k = " + edgeID);
 
 				
 				if(edgeID != -1){
@@ -163,7 +163,8 @@ public class Evaluator {
 					}
 					
 					fitness += diffDay * P_DAY;	
-					
+					//System.out.println("diff_year = " + this.graph.getEdge(edgeID).getDiff_year());
+					//System.out.println("same_year = " + this.graph.getEdge(edgeID).getSame_year());
 					fitness += this.graph.getEdge(edgeID).getDiff_year() * P_DIFF_YEAR;
 					fitness += this.graph.getEdge(edgeID).getSame_year() * P_SAME_YEAR;
 				}
@@ -172,13 +173,14 @@ public class Evaluator {
 			
 			}else{
 				
+				//System.out.println("E tudo 0 :p");
 				fitness += P_ZERO_CHILDS;
 				this.graph.getNodes().get(j).setColored(true);
 			}
 			
 		}		
 		
-		System.out.println("............... BYE ............");
+		//System.out.println("............... BYE ............");
 		
 		return fitness;		
 	}

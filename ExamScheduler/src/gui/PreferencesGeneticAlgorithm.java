@@ -29,13 +29,13 @@ public class PreferencesGeneticAlgorithm extends JDialog {
 	private int populationSize;
 	private double mutationRate;
 	private double crossoverRate;
-	private double elitismCount;	
+	private int elitismCount;	
 
 	/**
 	 * Create the dialog.
 	 */
 	public PreferencesGeneticAlgorithm(int iterationsGA, int populationSizeGA, double mutationRateGA,
-			double crossoverRateGA, double elitismCountGA) {
+			double crossoverRateGA, int elitismCountGA) {
 		
 		/* Initializing variables */
 		iterations = iterationsGA;
@@ -116,7 +116,7 @@ public class PreferencesGeneticAlgorithm extends JDialog {
 				populationSize = Integer.parseInt(valuePopulationSize.getText());
 				mutationRate = Double.parseDouble(valueMutationRate.getText());
 				crossoverRate = Double.parseDouble(valueCrossoverRate.getText());
-				elitismCount = Double.parseDouble(valueElitismCount.getText());	
+				elitismCount = Integer.parseInt(valueElitismCount.getText());	
 				
 				closeDialog();							
 			}
@@ -161,7 +161,7 @@ public class PreferencesGeneticAlgorithm extends JDialog {
 		return crossoverRate;
 	}
 	
-	public double getElitismCount() {
+	public int getElitismCount() {
 		return elitismCount;
 	}
 }

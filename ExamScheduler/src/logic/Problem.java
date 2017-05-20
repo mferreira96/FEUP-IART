@@ -10,6 +10,7 @@ public class Problem {
 	private ArrayList<Student> students;
 	private int numberOfDays;
 	private int byteDays;
+	private long duration;
 	
 	public Problem(){
 		this.exams = new ArrayList<Exam>();
@@ -66,12 +67,23 @@ public class Problem {
 		return students;
 	}	
 	
+	public long getDuration(){
+		return duration;
+	}
+	
+	public void setDuration(long time){
+		duration = time;
+	}
+	
 	@Override
 	public String toString(){
 		String result = "";
 		
 		for (int i = 0; i < exams.size(); i++)
 			result += exams.get(i).getDate()+" - ";			
+		
+		result += "duration = ";
+		result += duration + " ms";
 		
 		return result;			
 	}
