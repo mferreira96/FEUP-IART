@@ -297,6 +297,7 @@ public class Solver {
 	
 		SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(problem, maxIterations, numRepetitions, temperature, minTemperature, 
 				coolingRate, typeOfDecrease);
+		
 		simulatedAnnealing.solve();	
 		
 		for(int i = 0 ; i < problem.getNumberOfExames(); i++){

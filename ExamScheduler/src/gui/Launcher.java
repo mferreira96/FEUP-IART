@@ -83,7 +83,7 @@ public class Launcher {
 		
 		/* Simulated Annealing initialization */
 		maxIterationsSA = 500;
-		numRepetitionsSA = 10;
+		numRepetitionsSA = 5;
 		initialTemperatureSA = 20;
 		minimumTemperatureSA = 0.001;
 		coolingRateSA = 0.95;

@@ -19,8 +19,6 @@ public class SimulatedAnnealing {
 	private ArrayList<Integer> solution;
 	private Random random;
 	
-	
-
 	public SimulatedAnnealing(Problem problem, int maxIterations, int numRepetitions, double temperature, double minTemperature, 
 			double coolingRate, TypeOfDecrease typeOfDecrease){
 		
@@ -32,8 +30,7 @@ public class SimulatedAnnealing {
 		this.COOLINGRATE = coolingRate;
 		this.TYPEOFDECREASE = typeOfDecrease;
 		
-		generateInitialState();
-		solve();		
+		generateInitialState();		
 	}
 
 	public void generateInitialState(){
@@ -43,7 +40,7 @@ public class SimulatedAnnealing {
 		for (int i = 0; i < problem.getExams().size(); i++){
 			int examDay = random.nextInt(problem.getNumberOfDays())+1;
 			solution.add(examDay);
-		}		
+		}	
 	}
 
 	public void solve(){
@@ -54,23 +51,27 @@ public class SimulatedAnnealing {
 		double currentValue = evaluator.calculateFitness(solution, problem);
 
 		while(currentTemperature > MINTEMPERATURE){
-			int examToChange = random.nextInt(solution.size());
-			int oldExamDay = solution.get(examToChange);
-			//int newExamDay = random.nextInt(endDay-startingDay)+startingDay;
-			int newExamDay = random.nextInt(problem.getNumberOfDays())+1;
-			solution.set(examToChange, newExamDay);
+			int currentRepetion = 0;
+			while(currentRepetion < NUMREPETITIONS){
+				int examToChange = random.nextInt(solution.size());
+				int oldExamDay = solution.get(examToChange);
+				//int newExamDay = random.nextInt(endDay-startingDay)+startingDay;
+				int newExamDay = random.nextInt(problem.getNumberOfDays())+1;
+				solution.set(examToChange, newExamDay);
 
-			double newValue = evaluator.calculateFitness(solution, problem);
+				double newValue = evaluator.calculateFitness(solution, problem);
 
-			System.out.println(currentValue);
+				double change = newValue - currentValue;
+				if ((change > 0) || (random.nextDouble() < Math.pow(Math.E, change / currentTemperature)))
+					currentValue = newValue;
+				else
+					solution.set(examToChange, oldExamDay);			
 
-			double change = newValue - currentValue;
-			if ((change > 0) || (random.nextDouble() < Math.pow(Math.E, change / currentTemperature)))
-				currentValue = newValue;
-			else
-				solution.set(examToChange, oldExamDay);			
-
-			currentTemperature *= COOLINGRATE;			
+				System.out.println(currentValue);
+				System.out.println(solution);
+				currentRepetion++;					
+			}
+			currentTemperature *= COOLINGRATE;		
 		}	
 	}	
 
@@ -92,5 +93,17 @@ public class SimulatedAnnealing {
 
 	public void setSolution(ArrayList<Integer> solution) {
 		this.solution = solution;
+	}
+
+	public int getMAXITERATIONS() {
+		return MAXITERATIONS;
+	}
+
+	public int getNUMREPETITIONS() {
+		return NUMREPETITIONS;
+	}
+
+	public TypeOfDecrease getTYPEOFDECREASE() {
+		return TYPEOFDECREASE;
 	}
 }
