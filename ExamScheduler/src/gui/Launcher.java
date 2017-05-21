@@ -1,31 +1,23 @@
 package gui;
 
 import java.awt.EventQueue;
-import java.util.Properties;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
-import org.jdatepicker.impl.DateComponentFormatter;
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
 
 import algorithm.SimulatedAnnealing;
 import algorithm.Solver;
 import logic.Student;
 
-import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import javax.swing.JTextField;

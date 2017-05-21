@@ -1,6 +1,5 @@
 package cli;
 
-import algorithm.SimulatedAnnealing;
 import algorithm.Solver;
 
 public class ExamSheduler {

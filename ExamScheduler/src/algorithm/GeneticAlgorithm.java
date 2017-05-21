@@ -167,20 +167,17 @@ public class GeneticAlgorithm {
 	
 	public Individual selectParent(Population population){		
 		
-		// should be already ordered
 		ArrayList<Individual> individuals = population.getIndividuals();
 		
 		individuals.sort(null);
 		
 		double rouletPosition = Math.random() * population.getPopulationFitness();
-		//System.out.println("population fitness = " + population.getPopulationFitness());
-		//System.out.println("random position = " + rouletPosition);
 		
 		double counter = 0 ;
 		
 		for(int i = 0 ; i < individuals.size(); i++){
 			counter += individuals.get(i).getFitness();
-			//System.out.println(counter + " .......  " + individuals.get(i).getFitness() );
+
 			if(counter >= rouletPosition)
 				return individuals.get(i);
 			

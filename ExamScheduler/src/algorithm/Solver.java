@@ -254,18 +254,10 @@ public class Solver {
 		
 		while(!ga.isTerminated()){
 			
-			//Individual ind = ga.getPopulation().getFittest(0);
-			
-			//System.out.println("Fitness ....... "  + ind.getFitness());
-			
 			ga.crossoverPopulation();
-			
-			//System.out.println(ga.getPopulation().toString());
-			
+						
 			ga.mutatePopulation();
-			
-			//System.out.println(ga.getPopulation().toString());
-			
+						
 			ga.evalPopulation();
 			
 			ga.updateNumberOfIteration();
@@ -281,16 +273,10 @@ public class Solver {
 		long duration = (endTime - initialTime); // miliseconds
 		
 		problem.setDuration(duration);
-		System.out.println("------------------------ PROBLEM ----------------------------");
-		/*
-		for(int  j = 0 ; j < problem.getNumberOfExames(); j++){
-			System.out.println(problem.getExam(j).toString());
-		}*/
+
 		
 		System.out.println(problem.toString());
 		
-		System.out.println("Final");
-		System.out.println("Fitness ....... "  + bestIndividual.getFitness());
 	}	
 			
 	public void simulatedAnnealing(int days, int maxIterations, int numRepetitions, double temperature, double minTemperature, 
