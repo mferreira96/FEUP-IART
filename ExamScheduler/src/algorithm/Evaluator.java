@@ -119,8 +119,7 @@ public class Evaluator {
 		
 		this.updateDays(exam_days);
 		this.updateUnColored();
-		
-	
+			
 		for(int j = 0 ; j < this.graph.getNodes().size(); j++){
 		
 			VertexScheduler node = this.graph.getNodes().get(j);
@@ -141,31 +140,24 @@ public class Evaluator {
 					if(tempDiff < diffDay && tempDiff >=  0){
 						edgeID = index;
 						diffDay = tempDiff;
-					}
-				
+					}		
 				}
 				
-
 				if(edgeID != -1){
 					if(diffDay == 0){
 						fitness += P_SAME_DAY * node.getExam().getStudents().size();
-					}
-					
+					}	
 					fitness += diffDay * P_DAY;	
 					fitness += this.graph.getEdge(edgeID).getDiff_year() * P_DIFF_YEAR;
 					fitness += this.graph.getEdge(edgeID).getSame_year() * P_SAME_YEAR;
 				}
-				
 				this.graph.getNodes().get(j).setColored(true);
 			
 			}else{
-				
 				fitness += P_ZERO_CHILDS;
 				this.graph.getNodes().get(j).setColored(true);
 			}
-			
 		}		
-		
 		return fitness;		
 	}
 }
