@@ -50,7 +50,9 @@ public class SimulatedAnnealing {
 		/* Calculates the value of the initial solution */
 		double currentValue = evaluator.calculateFitness(solution, problem);
 
-		while(currentTemperature > MINTEMPERATURE){
+		int iteration = 0;
+		
+		while(iteration < MAXITERATIONS){
 			int currentRepetion = 0;
 			while(currentRepetion < NUMREPETITIONS){
 				int examToChange = random.nextInt(solution.size());
@@ -60,18 +62,25 @@ public class SimulatedAnnealing {
 				solution.set(examToChange, newExamDay);
 
 				double newValue = evaluator.calculateFitness(solution, problem);
-
 				double change = newValue - currentValue;
+				
 				if ((change > 0) || (random.nextDouble() < Math.pow(Math.E, change / currentTemperature)))
 					currentValue = newValue;
 				else
 					solution.set(examToChange, oldExamDay);			
 
-				System.out.println(currentValue);
-				System.out.println(solution);
 				currentRepetion++;					
 			}
-			currentTemperature *= COOLINGRATE;		
+
+			iteration++;
+			
+			if (TYPEOFDECREASE.equals(TypeOfDecrease.MULTIPLICATIVE))
+				currentTemperature *= COOLINGRATE;
+			else				
+				currentTemperature -= COOLINGRATE;
+			
+			if (currentTemperature < MINTEMPERATURE)
+				currentTemperature = MINTEMPERATURE;
 		}	
 	}	
 
