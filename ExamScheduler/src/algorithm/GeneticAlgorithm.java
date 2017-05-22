@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import logic.Problem;
 import utils.Utils;
 
-public class GeneticAlgorithm {
-	
-
-	
+public class GeneticAlgorithm {	
 	private final int MAX_ITERATIONS;	
 	private final double MUTATION_RATE;
 	private final double CROSSOVER_RATE;
@@ -124,10 +121,7 @@ public class GeneticAlgorithm {
 		}
 		
 	}
-	
-	
-	// TODO - verificar
-	
+		
 	public void crossoverPopulation(){
 		Population population = this.getPopulation();
 		

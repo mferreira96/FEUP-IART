@@ -103,7 +103,7 @@ public class PreferencesGeneticAlgorithm extends JDialog {
 		contentPanel.add(lblElitismCount);
 		
 		valueElitismCount = new JTextField();
-		valueElitismCount.setText(Double.toString(elitismCount));
+		valueElitismCount.setText(Integer.toString(elitismCount));
 		valueElitismCount.setBounds(145, 174, 86, 20);
 		contentPanel.add(valueElitismCount);
 		valueElitismCount.setColumns(10);		
@@ -132,7 +132,7 @@ public class PreferencesGeneticAlgorithm extends JDialog {
 				valuePopulationSize.setText(Integer.toString(populationSize));
 				valueMutationRate.setText(Double.toString(mutationRate));
 				valueCrossoverRate.setText(Double.toString(crossoverRate));
-				valueElitismCount.setText(Double.toString(elitismCount));
+				valueElitismCount.setText(Integer.toString(elitismCount));
 				
 				closeDialog();
 			}

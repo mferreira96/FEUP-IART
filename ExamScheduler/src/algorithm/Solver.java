@@ -274,6 +274,7 @@ public class Solver {
 		
 		problem.setDuration(duration);
 
+		System.out.println(bestIndividual.getFitness());
 		
 		System.out.println(problem.toString());
 		

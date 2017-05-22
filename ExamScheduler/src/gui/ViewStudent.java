@@ -3,7 +3,6 @@ package gui;
 import java.awt.BorderLayout;
 
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,7 +19,7 @@ public class ViewStudent extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ViewStudent(JFrame frame, Student student) {		
+	public ViewStudent(Student student) {		
 		this.student = student;
 		setResizable(false);
 		this.setTitle("View Student");

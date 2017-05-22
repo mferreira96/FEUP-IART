@@ -57,7 +57,6 @@ public class SimulatedAnnealing {
 			while(currentRepetion < NUMREPETITIONS){
 				int examToChange = random.nextInt(solution.size());
 				int oldExamDay = solution.get(examToChange);
-				//int newExamDay = random.nextInt(endDay-startingDay)+startingDay;
 				int newExamDay = random.nextInt(problem.getNumberOfDays())+1;
 				solution.set(examToChange, newExamDay);
 
@@ -82,6 +81,8 @@ public class SimulatedAnnealing {
 			if (currentTemperature < MINTEMPERATURE)
 				currentTemperature = MINTEMPERATURE;
 		}	
+		
+		System.out.println(currentValue);
 	}	
 
 	public double getTEMPERATURE() {

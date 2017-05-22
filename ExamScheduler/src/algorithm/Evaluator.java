@@ -12,8 +12,6 @@ import logic.Problem;
 import logic.Student;
 
 public class Evaluator {
-
-
 	private  GraphScheduler graph;
 	
 	private static Evaluator evaluator = new Evaluator(); 
